@@ -1,0 +1,38 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #fafafa;
+  color: #1a1a1a;
+}
+
+.content {
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.tagline {
+  margin: 0;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  font-style: italic;
+  color: #444;
+}
+
+.queltehue {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: min(180px, 30vw);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}

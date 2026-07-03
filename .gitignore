@@ -1,0 +1,52 @@
+# Dependencias
+node_modules/
+
+# Build (Create React App, Vite, etc.)
+build/
+dist/
+
+# GitHub Pages (si generas el sitio en una rama/carpeta local)
+gh-pages/
+
+# Variables de entorno y secretos locales
+.env
+.env.*
+!.env.example
+
+# Carpeta local no versionada
+local_info/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caché y artefactos temporales
+.cache/
+.parcel-cache/
+.vite/
+*.tsbuildinfo
+.eslintcache
+
+# Cobertura de tests
+coverage/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores e IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Misc
+*.local

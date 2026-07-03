@@ -1,18 +1,16 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home.jsx'
+import LetsSee from './pages/LetsSee.jsx'
 import './App.css'
 
 function App() {
   return (
-    <main className="page">
-      <div className="content">
-        <h1>CAW!</h1>
-        <p className="tagline">...how are we doing today?</p>
-      </div>
-      <img
-        className="queltehue"
-        src={`${import.meta.env.BASE_URL}queltehue.png`}
-        alt="Queltehue"
-      />
-    </main>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/lets-see" element={<LetsSee />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

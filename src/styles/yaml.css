@@ -1,0 +1,77 @@
+.yaml-viewer {
+  margin: 0;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.28) 100%);
+  box-shadow: inset 0 1px 0 rgba(245, 232, 208, 0.04);
+}
+
+.yaml-viewer__code {
+  display: block;
+  font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', Consolas,
+    'Liberation Mono', monospace;
+  font-size: clamp(0.76rem, 2.4vw, 0.88rem);
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.yaml-line {
+  white-space: pre;
+}
+
+.yaml-line--empty {
+  min-height: 1.65em;
+}
+
+.yaml-comment {
+  color: #7a9478;
+  font-style: italic;
+}
+
+.yaml-key {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.yaml-punct {
+  color: rgba(245, 232, 208, 0.45);
+}
+
+.yaml-value--number {
+  color: var(--color-accent-hot);
+  font-weight: 700;
+}
+
+.yaml-value--range {
+  color: #7eb8d8;
+  font-weight: 600;
+}
+
+.yaml-value--string {
+  color: #c9d68a;
+}
+
+.yaml-value--literal {
+  color: #d4a0c8;
+  font-weight: 600;
+}
+
+.yaml-value--plain {
+  color: var(--color-text);
+}
+
+.yaml-plain {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .yaml-viewer {
+    padding: var(--space-sm);
+  }
+}

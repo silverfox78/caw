@@ -1,0 +1,70 @@
+# Progreso de obra: árbol de etapas → sub-etapas → … → hoja (valor numérico).
+# Convenciones:
+#   - `stages`: raíz del árbol (mejor que `data`; describe el dominio).
+#   - Nodo intermedio: objeto con hijos (mapa anidado).
+#   - Nodo hoja: número entero dentro de `range`.
+#   - Hoja omitida o null → interpretar como 0.
+
+name: House in construction
+range: 0..5
+
+stages:
+  foundations:
+    site_prep:
+      survey: 5
+      excavation: 4
+      compaction: 4
+      drainage_bed: 3
+    structure:
+      footings: 4
+      rebar: 4
+      formwork: 3
+      concrete_pour: 4
+      curing: 2
+    waterproofing:
+      membrane: 1
+      perimeter_drain: 2
+    utilities_rough_in:
+      plumbing:
+        sewer: 3
+        water_main: 2
+        vents: 1
+      electrical:
+        conduits: 2
+        grounding: 1
+        temp_panel: 0
+      gas:
+        main_line: 2
+        meter_prep: 0
+
+  walls:
+    structure:
+      pillars: 2
+      beams: 1
+      blockwork: 2
+    openings:
+      windows: 0
+      doors: 1
+    finishes:
+      plaster: 0
+      decoration: 0
+
+  roof:
+    structure:
+      trusses: 0
+      decking: 0
+      waterproofing: 0
+    exterior:
+      tiles: 0
+      gutters: 0
+
+  interior:
+    electrical:
+      wiring: 0
+      switches: 2
+      sockets: 2
+    lighting:
+      rough_in: 0
+      fixtures: 0
+
+  other: 1

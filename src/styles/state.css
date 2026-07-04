@@ -1,0 +1,255 @@
+.project-tabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.project-tabs__tab {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.project-tabs__tab:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.project-tabs__tab--active {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.project-view__panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.project-view__panel[hidden] {
+  display: none;
+}
+
+.state-view {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.state-view__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  align-items: stretch;
+}
+
+.state-view__chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.state-view__summary {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.state-view__divider {
+  border: 0;
+  height: 1px;
+  margin: var(--space-lg) 0 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-border-strong),
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+.state-view__overall-label {
+  margin: 0 0 var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.state-view__overall-value {
+  margin: 0 0 var(--space-lg);
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 10vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-accent-hot);
+}
+
+.state-view__overall-unit {
+  margin-left: 0.1em;
+  font-size: 0.55em;
+  color: var(--color-accent);
+}
+
+.state-view__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+}
+
+.state-view__table th,
+.state-view__table td {
+  padding: 0.55rem 0.65rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.state-view__table th:last-child,
+.state-view__table td:last-child {
+  text-align: right;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.state-view__table th {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.state-view__table tbody tr {
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+
+.state-view__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.state-view__row--active {
+  background: var(--color-accent-soft);
+}
+
+.state-view__row--active td {
+  color: var(--color-text);
+}
+
+.state-view__row--active .state-view__dot {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.state-view__dot {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.state-view__message {
+  margin: 0;
+  padding: var(--space-lg);
+  text-align: center;
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.pie-chart {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(240px, 62vw);
+  aspect-ratio: 1;
+}
+
+.pie-chart__svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pie-chart__segment {
+  transition: opacity var(--duration-fast) ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.pie-chart__segment--dimmed {
+  opacity: 0.38;
+}
+
+.pie-chart__segment--active {
+  opacity: 1;
+}
+
+.pie-chart__segment--active .pie-chart__slice--base {
+  stroke: rgba(245, 232, 208, 0.75);
+  stroke-width: 2;
+}
+
+.pie-chart__slice--base:focus-visible {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.pie-chart--empty {
+  width: min(240px, 62vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-faint);
+  font-size: 0.85rem;
+}
+
+@media (min-width: 720px) {
+  .state-view__grid {
+    grid-template-columns: minmax(180px, 1fr) minmax(240px, 1.1fr);
+    align-items: stretch;
+  }
+
+  .state-view__chart {
+    align-self: stretch;
+    height: 100%;
+  }
+
+  .state-view__chart .pie-chart {
+    width: auto;
+    height: 90%;
+    max-height: 90%;
+    max-width: 100%;
+    aspect-ratio: 1;
+  }
+
+  .state-view__summary {
+    text-align: center;
+  }
+}

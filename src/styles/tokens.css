@@ -1,0 +1,50 @@
+:root {
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-ui: 'Syne', sans-serif;
+
+  /* Patagonian dawn palette */
+  --color-bg-deep: #141c18;
+  --color-bg-mid: #1f2b24;
+  --color-bg-glow: #3d2a18;
+  --color-surface: rgba(245, 232, 208, 0.05);
+  --color-surface-strong: rgba(245, 232, 208, 0.09);
+  --color-border: rgba(212, 168, 92, 0.22);
+  --color-border-strong: rgba(212, 168, 92, 0.45);
+
+  --color-text: #f5e8d0;
+  --color-text-muted: rgba(245, 232, 208, 0.62);
+  --color-text-faint: rgba(245, 232, 208, 0.38);
+
+  --color-accent: #d4a85c;
+  --color-accent-hot: #e07a3a;
+  --color-accent-soft: rgba(212, 168, 92, 0.14);
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+
+  /* Layout */
+  --page-padding: clamp(1.25rem, 4vw, 2.5rem);
+  --content-max: 42rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-pill: 999px;
+
+  /* Effects */
+  --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 40px rgba(212, 168, 92, 0.12);
+  --backdrop-blur: 12px;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 420ms;
+  --duration-slow: 900ms;
+  --stagger-step: 90ms;
+}

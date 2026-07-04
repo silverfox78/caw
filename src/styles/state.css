@@ -50,7 +50,13 @@
 .state-view {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.state-view__top {
+  flex-shrink: 0;
 }
 
 .state-view__grid {
@@ -77,7 +83,7 @@
 .state-view__divider {
   border: 0;
   height: 1px;
-  margin: var(--space-lg) 0 0;
+  margin: var(--space-md) 0 0;
   background: linear-gradient(
     90deg,
     transparent,
@@ -85,6 +91,165 @@
     transparent
   );
   flex-shrink: 0;
+}
+
+.state-view__detail {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: var(--space-sm);
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.state-view__detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+  padding-inline: clamp(0.5rem, 2vw, 1rem);
+}
+
+.state-view__detail-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.state-view__detail-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+}
+
+.state-view__detail-progress {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-accent-hot);
+}
+
+.state-view__detail-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-inline: clamp(0.75rem, 2.5vw, 1.25rem);
+  padding-bottom: var(--space-xs);
+}
+
+.stage-tree__placeholder {
+  margin: 0;
+  padding: var(--space-md) clamp(1rem, 3vw, 1.5rem);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+.stage-tree {
+  padding-inline: clamp(0.25rem, 1.5vw, 0.75rem);
+}
+
+.stage-tree__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: 0.35rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  overflow: hidden;
+  border-left: 3px solid var(--tree-fill, var(--color-accent));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--tree-fill, var(--color-accent)) 16%, transparent);
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  transition:
+    border-left-width var(--duration-normal) var(--ease-out-expo),
+    box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.stage-tree__row::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(
+    270deg,
+    color-mix(in srgb, var(--tree-fill, var(--color-accent)) 42%, transparent),
+    color-mix(in srgb, var(--tree-fill, var(--color-accent)) 16%, transparent)
+  );
+  transition: width var(--duration-normal) var(--ease-out-expo);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stage-tree__row:hover::after {
+  width: var(--tree-progress, 0%);
+}
+
+.stage-tree__row:hover {
+  border-left-width: 4px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tree-fill, var(--color-accent)) 28%, transparent);
+}
+
+.stage-tree__row--parent .stage-tree__label {
+  font-weight: 700;
+}
+
+.stage-tree__label {
+  position: relative;
+  z-index: 1;
+  color: var(--tree-text, var(--color-text));
+  font-weight: 500;
+}
+
+.stage-tree__progress {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-block;
+  transform-origin: right center;
+  font-weight: 700;
+  color: var(--tree-fill, var(--color-accent-hot));
+  transition:
+    transform var(--duration-normal) var(--ease-out-expo),
+    color var(--duration-normal) var(--ease-out-expo),
+    text-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.stage-tree__row:hover .stage-tree__progress {
+  transform: scale(1.25);
+  color: var(--color-text);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--tree-fill, var(--color-accent)) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-tree__row,
+  .stage-tree__row::after,
+  .stage-tree__progress {
+    transition: none;
+  }
+
+  .stage-tree__row:hover .stage-tree__progress {
+    transform: scale(1.1);
+  }
+}
+
+.stage-tree__placeholder--inline {
+  padding-top: 0;
 }
 
 .state-view__overall-label {
@@ -144,7 +309,9 @@
 .state-view__table tbody tr {
   transition:
     background-color var(--duration-fast) ease,
-    color var(--duration-fast) ease;
+    color var(--duration-fast) ease,
+    box-shadow var(--duration-fast) ease;
+  cursor: pointer;
 }
 
 .state-view__table tbody tr:last-child td {
@@ -161,6 +328,31 @@
 
 .state-view__row--active .state-view__dot {
   box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.state-view__row--pinned {
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.state-view__pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-bg-deep);
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.state-view__pin--header {
+  margin-right: 0;
 }
 
 .state-view__dot {
@@ -212,6 +404,11 @@
 .pie-chart__segment--active .pie-chart__slice--base {
   stroke: rgba(245, 232, 208, 0.75);
   stroke-width: 2;
+}
+
+.pie-chart__segment--pinned .pie-chart__slice--base {
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
 }
 
 .pie-chart__slice--base:focus-visible {

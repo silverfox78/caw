@@ -1,4 +1,10 @@
-function PieChart({ segments, activeKey, onSegmentHover }) {
+function PieChart({
+  segments,
+  activeKey,
+  pinnedKey,
+  onSegmentHover,
+  onSegmentClick,
+}) {
   if (!segments.length) {
     return (
       <div className="pie-chart pie-chart--empty" aria-hidden="true">
@@ -13,6 +19,7 @@ function PieChart({ segments, activeKey, onSegmentHover }) {
   const outerRadius = size / 2 - 6
   const innerRadius = outerRadius * 0.42
   const band = outerRadius - innerRadius
+  const focusKey = pinnedKey ?? activeKey
 
   return (
     <figure className="pie-chart" aria-label="Project stages progress">
@@ -20,24 +27,32 @@ function PieChart({ segments, activeKey, onSegmentHover }) {
         {segments.map((segment) => {
           const progressOuter =
             innerRadius + band * Math.min(100, Math.max(0, segment.progress)) / 100
-          const isActive = activeKey === segment.key
-          const isDimmed = activeKey != null && !isActive
+          const isPinned = pinnedKey === segment.key
+          const isHighlighted = focusKey === segment.key
+          const isDimmed = focusKey != null && !isHighlighted
 
           return (
             <g
               key={segment.key}
               className={[
                 'pie-chart__segment',
-                isActive ? 'pie-chart__segment--active' : '',
+                isHighlighted ? 'pie-chart__segment--active' : '',
+                isPinned ? 'pie-chart__segment--pinned' : '',
                 isDimmed ? 'pie-chart__segment--dimmed' : '',
               ]
                 .filter(Boolean)
                 .join(' ')}
               aria-label={`${segment.label}: ${segment.progress}%`}
+              aria-pressed={isPinned}
               onMouseEnter={() => onSegmentHover(segment.key)}
               onMouseLeave={() => onSegmentHover(null)}
-              onFocus={() => onSegmentHover(segment.key)}
-              onBlur={() => onSegmentHover(null)}
+              onClick={() => onSegmentClick(segment.key)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  onSegmentClick(segment.key)
+                }
+              }}
             >
               <path
                 className="pie-chart__slice pie-chart__slice--base"

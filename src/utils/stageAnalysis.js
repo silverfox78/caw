@@ -97,6 +97,68 @@ export function analyzeProject(doc) {
   return { error: null, roots, overall, range }
 }
 
+export function findStageRoot(roots, key) {
+  if (!key) {
+    return null
+  }
+
+  return roots.find((root) => root.key === key) ?? null
+}
+
+export function parseHslColor(hslString) {
+  const match = hslString?.match(/hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*\)/i)
+  if (!match) {
+    return { h: 22, s: 38, l: 34 }
+  }
+
+  return {
+    h: Number(match[1]),
+    s: Number(match[2]),
+    l: Number(match[3]),
+  }
+}
+
+function getNodeMaxDepth(node, currentDepth = 0) {
+  if (!node.children?.length) {
+    return currentDepth
+  }
+
+  return Math.max(...node.children.map((child) => getNodeMaxDepth(child, currentDepth + 1)))
+}
+
+export function getStageTreeMaxDepth(stage) {
+  if (!stage?.children?.length) {
+    return 0
+  }
+
+  return Math.max(...stage.children.map((child) => getNodeMaxDepth(child, 0)))
+}
+
+export function getDepthTone(stageColor, depth, maxDepth) {
+  const { h, s } = parseHslColor(stageColor)
+  const startLightness = 44
+  const endLightness = 20
+  const startSaturation = Math.max(s - 8, 28)
+  const endSaturation = Math.min(s + 14, 72)
+
+  if (maxDepth <= 0) {
+    return {
+      fill: `hsl(${h} ${startSaturation}% ${startLightness}%)`,
+      text: `hsl(${h} ${Math.min(startSaturation + 6, 78)}% ${Math.min(startLightness + 18, 88)}%)`,
+    }
+  }
+
+  const t = depth / maxDepth
+  const lightness = startLightness - t * (startLightness - endLightness)
+  const saturation = startSaturation + t * (endSaturation - startSaturation)
+  const textLightness = Math.min(lightness + 22, 90)
+
+  return {
+    fill: `hsl(${h} ${saturation}% ${lightness}%)`,
+    text: `hsl(${h} ${Math.min(saturation + 4, 80)}% ${textLightness}%)`,
+  }
+}
+
 function pickSegmentColors(index, total) {
   const hue = (22 + index * (360 / Math.max(total, 1))) % 360
 

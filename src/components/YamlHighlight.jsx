@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 function highlightValue(value) {
   const trimmed = value.trim()
 
@@ -23,17 +25,13 @@ function highlightValue(value) {
   return <span className="yaml-value yaml-value--plain">{value}</span>
 }
 
-function highlightLine(line, index) {
+function renderLineContent(line) {
   if (/^\s*#/.test(line)) {
-    return (
-      <div className="yaml-line" key={index}>
-        <span className="yaml-comment">{line}</span>
-      </div>
-    )
+    return <span className="yaml-comment">{line}</span>
   }
 
   if (line.trim() === '') {
-    return <div className="yaml-line yaml-line--empty" key={index}>&nbsp;</div>
+    return '\u00A0'
   }
 
   const keyMatch = line.match(/^(\s*)([\w.-]+)(\s*:\s*)(.*)$/)
@@ -42,31 +40,83 @@ function highlightLine(line, index) {
     const [, indent, key, separator, rest] = keyMatch
 
     return (
-      <div className="yaml-line" key={index}>
+      <>
         <span className="yaml-indent">{indent}</span>
         <span className="yaml-key">{key}</span>
         <span className="yaml-punct">{separator}</span>
         {rest ? highlightValue(rest) : null}
-      </div>
+      </>
     )
   }
 
-  return (
-    <div className="yaml-line" key={index}>
-      <span className="yaml-plain">{line}</span>
-    </div>
-  )
+  return <span className="yaml-plain">{line}</span>
 }
 
-function YamlHighlight({ code }) {
+function resolveDownloadName(fileName) {
+  if (!fileName) {
+    return 'project.yml'
+  }
+
+  if (/\.(yml|yaml)$/i.test(fileName)) {
+    return fileName
+  }
+
+  return `${fileName.replace(/\.[^.]+$/, '')}.yml`
+}
+
+function YamlHighlight({ code, fileName = 'project.yml' }) {
+  const [copied, setCopied] = useState(false)
   const lines = code.split('\n')
 
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  const handleDownload = () => {
+    const blob = new Blob([code], { type: 'text/yaml;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = resolveDownloadName(fileName)
+    anchor.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
-    <pre className="yaml-viewer" aria-label="YAML source">
-      <code className="yaml-viewer__code">
-        {lines.map((line, index) => highlightLine(line, index))}
-      </code>
-    </pre>
+    <div className="yaml-viewer-shell">
+      <div className="yaml-viewer__actions">
+        <button
+          type="button"
+          className="yaml-viewer__action"
+          onClick={handleCopy}
+          aria-live="polite"
+        >
+          {copied ? 'Copied' : 'Copy'}
+        </button>
+        <button type="button" className="yaml-viewer__action" onClick={handleDownload}>
+          Download
+        </button>
+      </div>
+
+      <pre className="yaml-viewer" aria-label="YAML source">
+        <code className="yaml-viewer__code">
+          {lines.map((line, index) => (
+            <div className="yaml-line-row" key={index}>
+              <span className="yaml-line-number" aria-hidden="true">
+                {index + 1}
+              </span>
+              <span className="yaml-line">{renderLineContent(line)}</span>
+            </div>
+          ))}
+        </code>
+      </pre>
+    </div>
   )
 }
 

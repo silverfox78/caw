@@ -7,6 +7,7 @@ import StageStateView from '../components/StageStateView.jsx'
 import ValidationAlert from '../components/ValidationAlert.jsx'
 import YamlHighlight from '../components/YamlHighlight.jsx'
 import { validateProjectDocument } from '../utils/validateProject.js'
+import { sanitizeProjectDocument } from '../utils/sanitizeProject.js'
 
 const EXAMPLE_URL = `${import.meta.env.BASE_URL}examples/house.yml`
 const EXAMPLE_NAME = 'house.yml'
@@ -82,6 +83,7 @@ function LetsSee() {
 
   const [source, setSource] = useState(null)
   const [raw, setRaw] = useState('')
+  const [displayYaml, setDisplayYaml] = useState('')
   const [parsed, setParsed] = useState(null)
   const [validation, setValidation] = useState(null)
   const [parseError, setParseError] = useState('')
@@ -100,12 +102,20 @@ function LetsSee() {
       const doc = parseYaml(text)
       const result = validateProjectDocument(doc, text)
 
-      setParsed(doc)
+      if (result.valid) {
+        const { doc: normalized, yaml } = sanitizeProjectDocument(doc)
+        setParsed(normalized)
+        setDisplayYaml(yaml)
+      } else {
+        setParsed(doc)
+        setDisplayYaml('')
+      }
+
       setParseError('')
       setValidation(result.valid ? null : result)
     } catch (err) {
       setParsed(null)
-      setValidation(null)
+      setDisplayYaml('')
       setParseError(err?.message ?? 'Could not parse the YAML file.')
     }
   }, [])
@@ -125,6 +135,7 @@ function LetsSee() {
       setSource(null)
       setRaw('')
       setParsed(null)
+      setDisplayYaml('')
       setValidation(null)
       setParseError('')
     } finally {
@@ -150,7 +161,6 @@ function LetsSee() {
     reader.readAsText(file)
   }
 
-  const isValid = parsed && !validation && !parseError
   const projectName =
     parsed && typeof parsed === 'object' && parsed.name ? parsed.name : source
   const showLoadedView = Boolean(source && raw)
@@ -219,39 +229,33 @@ function LetsSee() {
               parseError={parseError}
               fileName={source}
             />
-          ) : null}
+          ) : (
+            <section className="project-view__content" aria-live="polite">
+              <ProjectTabs activeTab={activeTab} onChange={setActiveTab} />
 
-          <section className="project-view__content" aria-live="polite">
-            <ProjectTabs activeTab={activeTab} onChange={setActiveTab} />
+              <div
+                role="tabpanel"
+                id="panel-state"
+                aria-labelledby="tab-state"
+                hidden={activeTab !== 'state'}
+                className="project-view__panel"
+              >
+                {activeTab === 'state' ? <StageStateView parsed={parsed} /> : null}
+              </div>
 
-            <div
-              role="tabpanel"
-              id="panel-state"
-              aria-labelledby="tab-state"
-              hidden={activeTab !== 'state'}
-              className="project-view__panel"
-            >
-              {activeTab === 'state' ? (
-                isValid ? (
-                  <StageStateView parsed={parsed} />
-                ) : (
-                  <p className="state-view__message">
-                    Fix the format issues above to see project state.
-                  </p>
-                )
-              ) : null}
-            </div>
-
-            <div
-              role="tabpanel"
-              id="panel-source"
-              aria-labelledby="tab-source"
-              hidden={activeTab !== 'source'}
-              className="project-view__panel"
-            >
-              {activeTab === 'source' ? <YamlHighlight code={raw} /> : null}
-            </div>
-          </section>
+              <div
+                role="tabpanel"
+                id="panel-source"
+                aria-labelledby="tab-source"
+                hidden={activeTab !== 'source'}
+                className="project-view__panel"
+              >
+                {activeTab === 'source' ? (
+                  <YamlHighlight code={displayYaml} fileName={source} />
+                ) : null}
+              </div>
+            </section>
+          )}
 
           <div className="actions project-view__back">
             <Link to="/" className="btn btn-secondary btn--compact">

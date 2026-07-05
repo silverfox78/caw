@@ -36,9 +36,19 @@ export function valueToProgress(value, range) {
   return ((clamped - min) / (max - min)) * 100
 }
 
+import { normalizeStages } from './stageNormalize.js'
+
 function finalizeNode(key, node, range) {
-  if (typeof node === 'number') {
+  if (typeof node === 'number' && Number.isFinite(node)) {
     const progress = valueToProgress(node, range)
+    return { key, label: formatLabel(key), progress, isLeaf: true, children: [] }
+  }
+
+  if (typeof node === 'string') {
+    const trimmed = node.trim()
+    const numeric = trimmed === '' ? range.min : Number(trimmed)
+    const value = Number.isFinite(numeric) ? numeric : range.min
+    const progress = valueToProgress(value, range)
     return { key, label: formatLabel(key), progress, isLeaf: true, children: [] }
   }
 
@@ -85,7 +95,8 @@ export function analyzeProject(doc) {
   }
 
   const range = parseRange(doc.range)
-  const roots = Object.entries(doc.stages).map(([key, node]) =>
+  const stages = normalizeStages(doc.stages, range.min)
+  const roots = Object.entries(stages).map(([key, node]) =>
     finalizeNode(key, node, range),
   )
 

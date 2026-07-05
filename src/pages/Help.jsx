@@ -44,6 +44,7 @@ function Help() {
           <ul className="help-view__list">
             <li>Use spaces for indentation (two spaces per level is a good default).</li>
             <li>Only numeric leaves count toward progress; missing leaves are treated as the minimum of <code>range</code>.</li>
+            <li>Child stages may be written as a map or as a YAML list with <code>- item</code>; lists are normalized automatically.</li>
             <li>Parent progress is the average of their children, rolled up through the tree.</li>
             <li>Lines starting with <code>#</code> are comments and are ignored.</li>
             <li>Do not repeat <code>name</code>, <code>range</code>, or <code>stages</code> at the top level.</li>

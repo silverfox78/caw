@@ -71,10 +71,12 @@ export function validateProjectDocument(doc, raw = '') {
 
   if (
     !missing.includes('stages') &&
-    (typeof doc.stages !== 'object' || Array.isArray(doc.stages) || doc.stages === null)
+    (doc.stages === null || typeof doc.stages !== 'object')
   ) {
-    typeErrors.push('`stages` must be a nested map of stages and progress values.')
+    typeErrors.push('`stages` must be a nested map or list of stage entries.')
   }
+
+  // Stage leaves without a numeric value, list items (`- item`), and null entries are allowed and normalized to 0.
 
   const errors = buildFriendlyMessage(missing, duplicates, typeErrors)
   const valid = missing.length === 0 && duplicates.length === 0 && typeErrors.length === 0

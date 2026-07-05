@@ -258,7 +258,7 @@
   flex-shrink: 0;
 }
 
-.project-view__content > .project-tabs {
+.project-view__content > .project-tabs-wrap {
   flex-shrink: 0;
 }
 

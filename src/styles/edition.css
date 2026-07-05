@@ -200,6 +200,171 @@
   text-align: center;
 }
 
+.stage-table {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.stage-table__head,
+.stage-table__row {
+  display: grid;
+  grid-template-columns:
+    2rem minmax(5.5rem, 1.35fr) minmax(4rem, 1.1fr) 2.75rem 2.75rem 2.85rem 3.1rem 2rem 2rem;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stage-table__head {
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(245, 232, 208, 0.04);
+  font-family: var(--font-ui);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.stage-table__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-table__block {
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+}
+
+.stage-table__block:last-child {
+  border-bottom: none;
+}
+
+.stage-table__block--branch {
+  background: hsl(var(--stage-hue) 34% 28% / 0.12);
+}
+
+.stage-table__row {
+  padding: 0.4rem 0.5rem;
+  padding-left: calc(0.5rem + var(--stage-depth, 0) * 1.25rem);
+}
+
+.stage-table__cell {
+  min-width: 0;
+}
+
+.stage-table__cell--toggle,
+.stage-table__cell--action {
+  display: flex;
+  justify-content: center;
+}
+
+.stage-table__cell--name {
+  display: flex;
+  min-width: 0;
+}
+
+.stage-table__cell--metric {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-align: right;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stage-table__cell--total {
+  color: var(--color-accent-hot);
+}
+
+.stage-table__cell--value {
+  display: flex;
+  justify-content: center;
+}
+
+.stage-table__input-name {
+  width: 100%;
+  min-width: 0;
+}
+
+.stage-table__input-value {
+  width: 100%;
+  max-width: 3.1rem;
+}
+
+.stage-table__value-placeholder {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: var(--color-text-faint);
+  font-size: 0.82rem;
+}
+
+.stage-table__bar {
+  position: relative;
+  height: 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--color-border-strong) 80%, transparent);
+  border-radius: 1px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(245, 232, 208, 0.05) 0,
+      rgba(245, 232, 208, 0.05) 2px,
+      rgba(245, 232, 208, 0.12) 2px,
+      rgba(245, 232, 208, 0.12) 4px
+    ),
+    rgba(0, 0, 0, 0.22);
+}
+
+.stage-table__bar-fill {
+  display: block;
+  height: 100%;
+  background: hsl(var(--stage-hue) 52% 42%);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  transition: width var(--duration-normal) var(--ease-out-expo);
+}
+
+.stage-table__errors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  padding: 0 0.5rem 0.35rem;
+  padding-left: calc(0.5rem + var(--stage-depth, 0) * 1.25rem);
+}
+
+.stage-table__children {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--duration-normal) var(--ease-out-expo);
+}
+
+.stage-table__children--closed {
+  grid-template-rows: 0fr;
+}
+
+.stage-table__children-inner {
+  overflow: hidden;
+  min-height: 0;
+  border-top: 1px solid hsl(var(--stage-hue) 38% 45% / 0.28);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.stage-table__children--closed .stage-table__children-inner {
+  border-top-color: transparent;
+}
+
+.stage-table__empty {
+  margin: 0;
+  padding: 0.45rem 0.75rem 0.55rem calc(0.75rem + var(--stage-depth, 0) * 1.25rem);
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-faint);
+  font-style: italic;
+}
+
 .stage-editor__cards {
   display: flex;
   flex-direction: column;
@@ -400,14 +565,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 3.75rem;
+  min-width: 2.75rem;
   height: 1.75rem;
   padding: 0 0.45rem;
   border-radius: calc(var(--radius-sm) - 2px);
   background: hsl(var(--stage-hue) 52% 38% / 0.35);
   border: 1px solid hsl(var(--stage-hue) 48% 52% / 0.45);
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-text);
@@ -509,6 +674,15 @@
   .edition-form__range-group {
     flex: 1 1 auto;
     width: 100%;
+  }
+
+  .stage-table {
+    overflow-x: auto;
+  }
+
+  .stage-table__head,
+  .stage-table__row {
+    min-width: 36rem;
   }
 
   .stage-card__header {

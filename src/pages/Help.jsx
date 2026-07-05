@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageShell from '../components/PageShell.jsx'
-import { TEMPLATE_URL, TRAVEL_EXAMPLE_URL } from '../utils/validateProject.js'
-import { ExampleDownloadLinks, ExampleOpenLinks } from '../components/ExampleButtons.jsx'
+import { EXAMPLE_URL, TEMPLATE_URL } from '../utils/validateProject.js'
 
 function Help() {
   return (
@@ -41,62 +40,12 @@ function Help() {
         </section>
 
         <section className="help-view__section">
-          <h2>Optional: stage weights</h2>
-          <p className="help-view__intro">
-            Prefix a stage name with a number in parentheses to set its share among siblings.
-            Values must be between 0 and 100. When you use weights at a level, they must add up
-            to 100. See the{' '}
-            <a href={TRAVEL_EXAMPLE_URL} download="travel.yml">
-              travel planning example
-            </a>{' '}
-            for a full project.
-          </p>
-          <pre>{`name: Patagonia trip
-range: 0..5
-
-stages:
-  (50)planning:
-    (40)research:
-      destination: 5
-      dates: 4
-    (35)budget:
-      flights: 4
-      lodging: 3
-    (25)logistics:
-      visas: 5
-      insurance: 4
-  (30)booking:
-    transport:
-      flights: 5
-    stays:
-      hotels: 4
-  (20)travel:
-    outbound: 5
-    on_the_road: 2`}</pre>
-          <ul className="help-view__list">
-            <li>
-              <code>(70)planning</code> means planning represents 70% of its parent level.
-            </li>
-            <li>Sibling weights must total 100. CAW rejects files where they sum to more than 100.</li>
-            <li>
-              If some siblings omit a weight, the remaining percentage is split among them. If
-              stated weights total less than 100 with no unweighted siblings, they are scaled
-              proportionally.
-            </li>
-            <li>
-              In State and Edition, progress is shown as achieved share vs. cap (e.g.{' '}
-              <code>49% / 70%</code>).
-            </li>
-          </ul>
-        </section>
-
-        <section className="help-view__section">
           <h2>Rules of thumb</h2>
           <ul className="help-view__list">
             <li>Use spaces for indentation (two spaces per level is a good default).</li>
             <li>Only numeric leaves count toward progress; missing leaves are treated as the minimum of <code>range</code>.</li>
             <li>Child stages may be written as a map or as a YAML list with <code>- item</code>; lists are normalized automatically.</li>
-            <li>Parent progress rolls up from children; optional weights change how siblings contribute (see above).</li>
+            <li>Parent progress is the average of their children, rolled up through the tree.</li>
             <li>Lines starting with <code>#</code> are comments and are ignored.</li>
             <li>Do not repeat <code>name</code>, <code>range</code>, or <code>stages</code> at the top level.</li>
           </ul>
@@ -105,15 +54,19 @@ stages:
         <section className="help-view__section">
           <h2>Start from a file</h2>
           <p className="help-view__intro">
-            Download a minimal template, the house example, or the travel example with weights,
-            edit locally, then load it back in CAW.
+            Download a minimal template or the full house example, edit it locally, then load
+            it back in CAW.
           </p>
           <div className="help-view__actions">
             <a href={TEMPLATE_URL} download="template.yml" className="btn btn-primary">
               Download template
             </a>
-            <ExampleDownloadLinks />
-            <ExampleOpenLinks />
+            <a href={EXAMPLE_URL} download="house.yml" className="btn btn-secondary">
+              Download house example
+            </a>
+            <Link to="/lets-see?example=1" className="btn btn-secondary">
+              Open house example
+            </Link>
           </div>
         </section>
 

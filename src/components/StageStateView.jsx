@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import PieChart from './PieChart.jsx'
-import OverallProgressHero from './OverallProgressHero.jsx'
+import StateMissionBoard from './StateMissionBoard.jsx'
+import StateSummaryLegacy from './StateSummaryLegacy.jsx'
 import ProgressShareLabel from './ProgressShareLabel.jsx'
 import StageTreeView from './StageTreeView.jsx'
 import {
@@ -12,6 +13,7 @@ import {
 function StageStateView({ parsed }) {
   const [hoveredKey, setHoveredKey] = useState(null)
   const [pinnedKey, setPinnedKey] = useState(null)
+  const [useLegacySummary, setUseLegacySummary] = useState(false)
   const analysis = analyzeProject(parsed)
 
   const togglePin = useCallback((key) => {
@@ -41,76 +43,54 @@ function StageStateView({ parsed }) {
   return (
     <div className="state-view">
       <div className="state-view__top">
-        <div className="state-view__grid">
+        <div
+          className={`state-view__grid${useLegacySummary ? '' : ' state-view__grid--mission'}`}
+        >
           <div className="state-view__chart">
-            <PieChart
-              segments={segments}
-              activeKey={pinnedKey ?? hoveredKey}
-              pinnedKey={pinnedKey}
-              onSegmentHover={setHoveredKey}
-              onSegmentClick={togglePin}
-            />
+            <div className="state-view__chart-square">
+              <PieChart
+                segments={segments}
+                activeKey={pinnedKey ?? hoveredKey}
+                pinnedKey={pinnedKey}
+                onSegmentHover={setHoveredKey}
+                onSegmentClick={togglePin}
+              />
+            </div>
           </div>
 
-          <div className="state-view__summary">
-            <p className="state-view__overall-label">Project progress</p>
-            <OverallProgressHero
-              overall={analysis.overall}
-              segmentColors={segments.map((segment) => segment.color)}
-            />
-
-            <table className="state-view__table">
-              <thead>
-                <tr>
-                  <th scope="col">Stage</th>
-                  <th scope="col">Progress</th>
-                </tr>
-              </thead>
-              <tbody>
-                {analysis.roots.map((root, index) => {
-                  const isPinned = pinnedKey === root.key
-                  const isHighlighted = (pinnedKey ?? hoveredKey) === root.key
-
-                  return (
-                    <tr
-                      key={root.key}
-                      className={[
-                        isHighlighted ? 'state-view__row--active' : '',
-                        isPinned ? 'state-view__row--pinned' : '',
-                      ]
-                        .filter(Boolean)
-                        .join(' ') || undefined}
-                      onMouseEnter={() => setHoveredKey(root.key)}
-                      onMouseLeave={() => setHoveredKey(null)}
-                      onClick={() => togglePin(root.key)}
-                    >
-                      <td>
-                        {isPinned ? (
-                          <span className="state-view__pin" aria-hidden="true">
-                            ✓
-                          </span>
-                        ) : null}
-                        <span
-                          className="state-view__dot"
-                          style={{ backgroundColor: segments[index]?.color }}
-                          aria-hidden="true"
-                        />
-                        {root.label}
-                      </td>
-                      <td>
-                        <ProgressShareLabel
-                          progress={root.progress}
-                          share={root.share ?? 100}
-                          displayProgress={root.displayProgress ?? root.progress}
-                        />
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+          <div className={`state-view__summary${useLegacySummary ? '' : ' state-view__summary--mission'}`}>
+            {useLegacySummary ? (
+              <StateSummaryLegacy
+                roots={analysis.roots}
+                segments={segments}
+                overall={analysis.overall}
+                pinnedKey={pinnedKey}
+                hoveredKey={hoveredKey}
+                onHover={setHoveredKey}
+                onPin={togglePin}
+              />
+            ) : (
+              <StateMissionBoard
+                roots={analysis.roots}
+                segments={segments}
+                overall={analysis.overall}
+                pinnedKey={pinnedKey}
+                hoveredKey={hoveredKey}
+                onHover={setHoveredKey}
+                onPin={togglePin}
+              />
+            )}
           </div>
         </div>
+
+        <button
+          type="button"
+          className="state-view__version-toggle"
+          onClick={() => setUseLegacySummary((current) => !current)}
+          title={useLegacySummary ? 'Switch to mission board (v2)' : 'Switch to classic summary (v1)'}
+        >
+          {useLegacySummary ? 'v2' : 'v1'}
+        </button>
 
         <hr className="state-view__divider" aria-hidden="true" />
       </div>

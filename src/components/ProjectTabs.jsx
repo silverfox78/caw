@@ -1,39 +1,42 @@
 function ProjectTabs({ activeTab, onChange }) {
   return (
-    <div className="project-tabs" role="tablist" aria-label="Project views">
-      <button
-        type="button"
-        role="tab"
-        id="tab-state"
-        aria-selected={activeTab === 'state'}
-        aria-controls="panel-state"
-        className={`project-tabs__tab${activeTab === 'state' ? ' project-tabs__tab--active' : ''}`}
-        onClick={() => onChange('state')}
-      >
-        State
-      </button>
-      <button
-        type="button"
-        role="tab"
-        id="tab-source"
-        aria-selected={activeTab === 'source'}
-        aria-controls="panel-source"
-        className={`project-tabs__tab${activeTab === 'source' ? ' project-tabs__tab--active' : ''}`}
-        onClick={() => onChange('source')}
-      >
-        Source
-      </button>
-      <button
-        type="button"
-        role="tab"
-        id="tab-edition"
-        aria-selected={activeTab === 'edition'}
-        aria-controls="panel-edition"
-        className={`project-tabs__tab${activeTab === 'edition' ? ' project-tabs__tab--active' : ''}`}
-        onClick={() => onChange('edition')}
-      >
-        Edition
-      </button>
+    <div className="project-tabs-wrap">
+      <hr className="project-tabs__rule" aria-hidden="true" />
+      <div className="project-tabs" role="tablist" aria-label="Project views">
+        <button
+          type="button"
+          role="tab"
+          id="tab-state"
+          aria-selected={activeTab === 'state'}
+          aria-controls="panel-state"
+          className={`project-tabs__tab${activeTab === 'state' ? ' project-tabs__tab--active' : ''}`}
+          onClick={() => onChange('state')}
+        >
+          State
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-source"
+          aria-selected={activeTab === 'source'}
+          aria-controls="panel-source"
+          className={`project-tabs__tab${activeTab === 'source' ? ' project-tabs__tab--active' : ''}`}
+          onClick={() => onChange('source')}
+        >
+          Source
+        </button>
+        <button
+          type="button"
+          role="tab"
+          id="tab-edition"
+          aria-selected={activeTab === 'edition'}
+          aria-controls="panel-edition"
+          className={`project-tabs__tab${activeTab === 'edition' ? ' project-tabs__tab--active' : ''}`}
+          onClick={() => onChange('edition')}
+        >
+          Edition
+        </button>
+      </div>
     </div>
   )
 }

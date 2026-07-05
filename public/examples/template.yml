@@ -2,10 +2,10 @@ name: My project
 range: 0..5
 
 stages:
-  (70)planning:
+  planning:
     research: 0
     budget: 0
-  (10)execution:
+  execution:
     setup: 0
     delivery: 0
-  (20)wrap_up: 0
+  wrap_up: 0

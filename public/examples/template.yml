@@ -1,0 +1,11 @@
+name: My project
+range: 0..5
+
+stages:
+  planning:
+    research: 0
+    budget: 0
+  execution:
+    setup: 0
+    delivery: 0
+  wrap_up: 0

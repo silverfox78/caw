@@ -127,6 +127,22 @@
   justify-content: center;
 }
 
+.load-prompt__help-link {
+  margin: var(--space-md) 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.load-prompt__help-link a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.load-prompt__help-link a:hover {
+  text-decoration: underline;
+}
+
 .project-view {
   width: 100%;
   display: flex;

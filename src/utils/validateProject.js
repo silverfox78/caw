@@ -1,0 +1,95 @@
+const REQUIRED_FIELDS = [
+  { key: 'name', label: 'name' },
+  { key: 'range', label: 'range' },
+  { key: 'stages', label: 'stages' },
+]
+
+function countTopLevelKey(raw, key) {
+  if (!raw) {
+    return 0
+  }
+
+  const pattern = new RegExp(`^${key}\\s*:`, 'im')
+  return raw.split('\n').filter((line) => pattern.test(line)).length
+}
+
+function buildFriendlyMessage(missing, duplicates, typeErrors) {
+  const parts = []
+
+  if (missing.length) {
+    parts.push(`Missing: ${missing.map((key) => `\`${key}\``).join(', ')}`)
+  }
+
+  if (duplicates.length) {
+    parts.push(
+      `Duplicate entries: ${duplicates.map((key) => `\`${key}\``).join(', ')}`,
+    )
+  }
+
+  if (typeErrors.length) {
+    parts.push(...typeErrors)
+  }
+
+  return parts
+}
+
+export function validateProjectDocument(doc, raw = '') {
+  const missing = []
+  const duplicates = []
+  const typeErrors = []
+
+  if (!doc || typeof doc !== 'object' || Array.isArray(doc)) {
+    return {
+      valid: false,
+      missing: REQUIRED_FIELDS.map((field) => field.key),
+      duplicates: [],
+      typeErrors: ['The file must be a YAML object with project fields at the top level.'],
+      errors: ['The file must be a YAML object with project fields at the top level.'],
+      summary: 'This file is not a valid project document.',
+    }
+  }
+
+  for (const field of REQUIRED_FIELDS) {
+    const occurrences = countTopLevelKey(raw, field.key)
+
+    if (occurrences > 1) {
+      duplicates.push(field.key)
+    }
+
+    if (!(field.key in doc) || doc[field.key] === null || doc[field.key] === undefined) {
+      missing.push(field.key)
+    }
+  }
+
+  if (!missing.includes('name') && (typeof doc.name !== 'string' || !doc.name.trim())) {
+    typeErrors.push('`name` must be a non-empty text value.')
+  }
+
+  if (!missing.includes('range') && (doc.range === '' || doc.range == null)) {
+    typeErrors.push('`range` must define the progress scale (for example `0..5`).')
+  }
+
+  if (
+    !missing.includes('stages') &&
+    (typeof doc.stages !== 'object' || Array.isArray(doc.stages) || doc.stages === null)
+  ) {
+    typeErrors.push('`stages` must be a nested map of stages and progress values.')
+  }
+
+  const errors = buildFriendlyMessage(missing, duplicates, typeErrors)
+  const valid = missing.length === 0 && duplicates.length === 0 && typeErrors.length === 0
+
+  return {
+    valid,
+    missing,
+    duplicates,
+    typeErrors,
+    errors,
+    summary: valid
+      ? null
+      : 'There is a problem with the file format. A valid project needs `name`, `range`, and `stages` exactly once at the top level.',
+  }
+}
+
+export const TEMPLATE_URL = `${import.meta.env.BASE_URL}examples/template.yml`
+export const EXAMPLE_URL = `${import.meta.env.BASE_URL}examples/house.yml`

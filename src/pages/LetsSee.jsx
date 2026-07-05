@@ -4,11 +4,21 @@ import { load as parseYaml } from 'js-yaml'
 import PageShell from '../components/PageShell.jsx'
 import ProjectTabs from '../components/ProjectTabs.jsx'
 import StageStateView from '../components/StageStateView.jsx'
+import ValidationAlert from '../components/ValidationAlert.jsx'
 import YamlHighlight from '../components/YamlHighlight.jsx'
+import { validateProjectDocument } from '../utils/validateProject.js'
+
 const EXAMPLE_URL = `${import.meta.env.BASE_URL}examples/house.yml`
 const EXAMPLE_NAME = 'house.yml'
 
-function LoadPrompt({ onChooseFile, onLoadExample, loading, error, fileInputRef, onFileChange }) {
+function LoadPrompt({
+  onChooseFile,
+  onLoadExample,
+  loading,
+  loadError,
+  fileInputRef,
+  onFileChange,
+}) {
   return (
     <div className="load-prompt">
       <p className="load-prompt__eyebrow reveal reveal--1">Project loader</p>
@@ -47,11 +57,15 @@ function LoadPrompt({ onChooseFile, onLoadExample, loading, error, fileInputRef,
         />
       </div>
 
-      {error ? (
+      {loadError ? (
         <p className="viewer__error" role="alert">
-          {error}
+          {loadError}
         </p>
       ) : null}
+
+      <p className="load-prompt__help-link">
+        <Link to="/help">Need help with the file format?</Link>
+      </p>
 
       <div className="actions load-prompt__back">
         <Link to="/" className="btn btn-secondary">
@@ -69,7 +83,9 @@ function LetsSee() {
   const [source, setSource] = useState(null)
   const [raw, setRaw] = useState('')
   const [parsed, setParsed] = useState(null)
-  const [error, setError] = useState('')
+  const [validation, setValidation] = useState(null)
+  const [parseError, setParseError] = useState('')
+  const [loadError, setLoadError] = useState('')
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('state')
   const fileInputRef = useRef(null)
@@ -78,31 +94,39 @@ function LetsSee() {
     setRaw(text)
     setSource(originLabel)
     setActiveTab('state')
+    setLoadError('')
+
     try {
       const doc = parseYaml(text)
+      const result = validateProjectDocument(doc, text)
+
       setParsed(doc)
-      setError('')
+      setParseError('')
+      setValidation(result.valid ? null : result)
     } catch (err) {
       setParsed(null)
-      setError(err?.message ?? 'No se pudo interpretar el YAML.')
+      setValidation(null)
+      setParseError(err?.message ?? 'Could not parse the YAML file.')
     }
   }, [])
 
   const loadExample = useCallback(async () => {
     setLoading(true)
-    setError('')
+    setLoadError('')
     try {
       const res = await fetch(EXAMPLE_URL)
       if (!res.ok) {
-        throw new Error(`No se pudo cargar el ejemplo (HTTP ${res.status}).`)
+        throw new Error(`Could not load the example (HTTP ${res.status}).`)
       }
       const text = await res.text()
       loadFromText(text, EXAMPLE_NAME)
     } catch (err) {
-      setError(err?.message ?? 'No se pudo cargar el ejemplo.')
+      setLoadError(err?.message ?? 'Could not load the example.')
       setSource(null)
       setRaw('')
       setParsed(null)
+      setValidation(null)
+      setParseError('')
     } finally {
       setLoading(false)
     }
@@ -122,16 +146,17 @@ function LetsSee() {
     }
     const reader = new FileReader()
     reader.onload = () => loadFromText(String(reader.result), file.name)
-    reader.onerror = () => setError('No se pudo leer el archivo.')
+    reader.onerror = () => setLoadError('Could not read the file.')
     reader.readAsText(file)
   }
 
+  const isValid = parsed && !validation && !parseError
   const projectName =
     parsed && typeof parsed === 'object' && parsed.name ? parsed.name : source
-
   const showLoadedView = Boolean(source && raw)
 
-  return (    <PageShell variant="workspace">
+  return (
+    <PageShell variant="workspace">
       {loading && !source ? (
         <div className="load-prompt load-prompt--loading">
           <p className="load-prompt__hint">Loading example…</p>
@@ -143,7 +168,7 @@ function LetsSee() {
           onChooseFile={() => fileInputRef.current?.click()}
           onLoadExample={loadExample}
           loading={loading}
-          error={error}
+          loadError={loadError}
           fileInputRef={fileInputRef}
           onFileChange={handleFile}
         />
@@ -176,6 +201,9 @@ function LetsSee() {
             >
               Load example
             </button>
+            <Link to="/help" className="btn btn-secondary btn--compact">
+              Format guide
+            </Link>
             <input
               ref={fileInputRef}
               type="file"
@@ -185,10 +213,12 @@ function LetsSee() {
             />
           </div>
 
-          {error ? (
-            <p className="viewer__error project-view__error" role="alert">
-              {error}
-            </p>
+          {validation || parseError ? (
+            <ValidationAlert
+              validation={validation}
+              parseError={parseError}
+              fileName={source}
+            />
           ) : null}
 
           <section className="project-view__content" aria-live="polite">
@@ -202,11 +232,11 @@ function LetsSee() {
               className="project-view__panel"
             >
               {activeTab === 'state' ? (
-                parsed && !error ? (
+                isValid ? (
                   <StageStateView parsed={parsed} />
                 ) : (
                   <p className="state-view__message">
-                    Load a valid YAML with a `stages` section to see project state.
+                    Fix the format issues above to see project state.
                   </p>
                 )
               ) : null}

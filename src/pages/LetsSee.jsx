@@ -8,6 +8,7 @@ import ValidationAlert from '../components/ValidationAlert.jsx'
 import YamlHighlight from '../components/YamlHighlight.jsx'
 import ProjectEditionForm from '../components/ProjectEditionForm.jsx'
 import ExampleLoadButtons from '../components/ExampleButtons.jsx'
+import CawIcon from '../components/CawIcon.jsx'
 import { getExampleById, resolveExampleFromSearchParam } from '../utils/projectExamples.js'
 import { validateProjectDocument } from '../utils/validateProject.js'
 import { sanitizeProjectDocument } from '../utils/sanitizeProject.js'
@@ -29,9 +30,7 @@ function LoadPrompt({
       </p>
 
       <div className="load-prompt__dropzone reveal reveal--4">
-        <span className="load-prompt__icon" aria-hidden="true">
-          YML
-        </span>
+        <CawIcon size="lg" className="load-prompt__icon" alt="" />
         <div className="load-prompt__actions">
           <button
             type="button"

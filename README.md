@@ -1,5 +1,9 @@
 # CAW
 
+<p align="center">
+  <img src="public/furious.png" alt="CAW — mascota del proyecto" width="160" />
+</p>
+
 **CAW!** — *…¿cómo venimos hoy?*
 
 CAW es una app web para cargar un YAML de proyecto, seguir el avance de etapas anidadas y editarlo en el navegador. Un solo archivo describe el proyecto, un rango numérico define la escala, y un árbol de *stages* se consolida en un porcentaje global.

@@ -2,6 +2,50 @@
   margin-bottom: var(--space-lg);
 }
 
+.page-header__icon {
+  margin-bottom: var(--space-md);
+}
+
+.page-header__eyebrow--with-icon {
+  margin-top: 0;
+}
+
+.caw-icon {
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 35%, transparent),
+    0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.caw-icon--sm {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.caw-icon--md {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.caw-icon--lg {
+  width: 5rem;
+  height: 5rem;
+}
+
+.caw-icon--xl {
+  width: clamp(5.5rem, 18vw, 7rem);
+  height: clamp(5.5rem, 18vw, 7rem);
+}
+
+.load-prompt__icon.caw-icon {
+  margin-inline: auto;
+  margin-bottom: var(--space-lg);
+  background: transparent;
+}
+
 .page-header__eyebrow {
   display: inline-block;
   margin: 0 0 var(--space-sm);

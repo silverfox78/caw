@@ -10,6 +10,7 @@ function Home() {
         eyebrow="Field notes"
         title="CAW!"
         tagline="...how are we doing today?"
+        showIcon
       />
       <div className="divider reveal reveal--3" aria-hidden="true" />
       <div className="actions reveal reveal--4">

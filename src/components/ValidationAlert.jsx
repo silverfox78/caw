@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ExampleDownloadLinks } from './ExampleButtons.jsx'
+import CawIcon from './CawIcon.jsx'
 import { TEMPLATE_URL } from '../utils/validateProject.js'
 
 function ValidationAlert({ validation, fileName, parseError }) {
@@ -12,11 +13,7 @@ function ValidationAlert({ validation, fileName, parseError }) {
   return (
     <div className="validation-alert" role="alert">
       <div className="validation-alert__visual">
-        <img
-          className="validation-alert__image"
-          src={`${import.meta.env.BASE_URL}furious.png`}
-          alt=""
-        />
+        <CawIcon size="lg" className="validation-alert__image" alt="" />
       </div>
 
       <div className="validation-alert__body">

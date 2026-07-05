@@ -7,11 +7,10 @@ import StageStateView from '../components/StageStateView.jsx'
 import ValidationAlert from '../components/ValidationAlert.jsx'
 import YamlHighlight from '../components/YamlHighlight.jsx'
 import ProjectEditionForm from '../components/ProjectEditionForm.jsx'
+import ExampleLoadButtons from '../components/ExampleButtons.jsx'
+import { getExampleById, resolveExampleFromSearchParam } from '../utils/projectExamples.js'
 import { validateProjectDocument } from '../utils/validateProject.js'
 import { sanitizeProjectDocument } from '../utils/sanitizeProject.js'
-
-const EXAMPLE_URL = `${import.meta.env.BASE_URL}examples/house.yml`
-const EXAMPLE_NAME = 'house.yml'
 
 function LoadPrompt({
   onChooseFile,
@@ -26,7 +25,7 @@ function LoadPrompt({
       <p className="load-prompt__eyebrow reveal reveal--1">Project loader</p>
       <h1 className="load-prompt__title reveal reveal--2">Choose a .yml file</h1>
       <p className="load-prompt__hint reveal reveal--3">
-        Pick a local YAML file or start from the built-in house example.
+        Pick a local YAML file, or open a basic or advanced built-in example.
       </p>
 
       <div className="load-prompt__dropzone reveal reveal--4">
@@ -41,14 +40,7 @@ function LoadPrompt({
           >
             Choose file
           </button>
-          <button
-            type="button"
-            className="btn btn-secondary load-prompt__btn"
-            onClick={onLoadExample}
-            disabled={loading}
-          >
-            {loading ? 'Loading…' : 'Load example'}
-          </button>
+          <ExampleLoadButtons onLoad={onLoadExample} loading={loading} />
         </div>
         <input
           ref={fileInputRef}
@@ -80,7 +72,8 @@ function LoadPrompt({
 
 function LetsSee() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const wantsExample = searchParams.get('example') === '1'
+  const exampleParam = searchParams.get('example')
+  const pendingExample = resolveExampleFromSearchParam(exampleParam)
 
   const [source, setSource] = useState(null)
   const [raw, setRaw] = useState('')
@@ -129,39 +122,53 @@ function LetsSee() {
     }
   }, [])
 
-  const loadExample = useCallback(async () => {
-    setLoading(true)
-    setLoadError('')
-    try {
-      const res = await fetch(EXAMPLE_URL)
-      if (!res.ok) {
-        throw new Error(`Could not load the example (HTTP ${res.status}).`)
+  const loadExample = useCallback(
+    async (exampleId = 'basic') => {
+      const example = getExampleById(exampleId)
+
+      if (!example) {
+        setLoadError('Unknown example.')
+        return
       }
-      const text = await res.text()
-      loadFromText(text, EXAMPLE_NAME)
-    } catch (err) {
-      setLoadError(err?.message ?? 'Could not load the example.')
-      setSource(null)
-      setRaw('')
-      setParsed(null)
-      setDisplayYaml('')
-      setValidation(null)
-      setParseError('')
-    } finally {
-      setLoading(false)
-    }
-  }, [loadFromText])
+
+      setLoading(true)
+      setLoadError('')
+
+      try {
+        const res = await fetch(example.url)
+
+        if (!res.ok) {
+          throw new Error(`Could not load the example (HTTP ${res.status}).`)
+        }
+
+        const text = await res.text()
+        loadFromText(text, example.fileName)
+        setSearchParams({ example: example.id }, { replace: true })
+      } catch (err) {
+        setLoadError(err?.message ?? 'Could not load the example.')
+        setSource(null)
+        setRaw('')
+        setParsed(null)
+        setDisplayYaml('')
+        setValidation(null)
+        setParseError('')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [loadFromText, setSearchParams],
+  )
 
   useEffect(() => {
-    if (wantsExample && !source) {
-      loadExample()
+    if (pendingExample && !source) {
+      loadExample(pendingExample.id)
     }
-  }, [wantsExample, source, loadExample])
+  }, [pendingExample, source, loadExample])
 
   const handleFile = (event) => {
     const file = event.target.files?.[0]
     if (!file) return
-    if (wantsExample) {
+    if (exampleParam) {
       setSearchParams({}, { replace: true })
     }
     const reader = new FileReader()
@@ -212,14 +219,12 @@ function LetsSee() {
             >
               Change file
             </button>
-            <button
-              type="button"
-              className="btn btn-secondary btn--compact"
-              onClick={loadExample}
-              disabled={loading}
-            >
-              Load example
-            </button>
+            <ExampleLoadButtons
+              onLoad={loadExample}
+              loading={loading}
+              variant="toolbar"
+              compact
+            />
             <Link to="/help" className="btn btn-secondary btn--compact">
               Format guide
             </Link>

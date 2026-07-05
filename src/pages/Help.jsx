@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageShell from '../components/PageShell.jsx'
-import { EXAMPLE_URL, TEMPLATE_URL } from '../utils/validateProject.js'
+import { TEMPLATE_URL, TRAVEL_EXAMPLE_URL } from '../utils/validateProject.js'
+import { ExampleDownloadLinks, ExampleOpenLinks } from '../components/ExampleButtons.jsx'
 
 function Help() {
   return (
@@ -44,16 +45,34 @@ function Help() {
           <p className="help-view__intro">
             Prefix a stage name with a number in parentheses to set its share among siblings.
             Values must be between 0 and 100. When you use weights at a level, they must add up
-            to 100.
+            to 100. See the{' '}
+            <a href={TRAVEL_EXAMPLE_URL} download="travel.yml">
+              travel planning example
+            </a>{' '}
+            for a full project.
           </p>
-          <pre>{`stages:
-  (70)planning:
-    research: 4
-    budget: 3
-  (10)execution:
-    setup: 5
-    delivery: 2
-  (20)wrap_up: 3`}</pre>
+          <pre>{`name: Patagonia trip
+range: 0..5
+
+stages:
+  (50)planning:
+    (40)research:
+      destination: 5
+      dates: 4
+    (35)budget:
+      flights: 4
+      lodging: 3
+    (25)logistics:
+      visas: 5
+      insurance: 4
+  (30)booking:
+    transport:
+      flights: 5
+    stays:
+      hotels: 4
+  (20)travel:
+    outbound: 5
+    on_the_road: 2`}</pre>
           <ul className="help-view__list">
             <li>
               <code>(70)planning</code> means planning represents 70% of its parent level.
@@ -86,19 +105,15 @@ function Help() {
         <section className="help-view__section">
           <h2>Start from a file</h2>
           <p className="help-view__intro">
-            Download a minimal template or the full house example, edit it locally, then load
-            it back in CAW.
+            Download a minimal template, the house example, or the travel example with weights,
+            edit locally, then load it back in CAW.
           </p>
           <div className="help-view__actions">
             <a href={TEMPLATE_URL} download="template.yml" className="btn btn-primary">
               Download template
             </a>
-            <a href={EXAMPLE_URL} download="house.yml" className="btn btn-secondary">
-              Download house example
-            </a>
-            <Link to="/lets-see?example=1" className="btn btn-secondary">
-              Open house example
-            </Link>
+            <ExampleDownloadLinks />
+            <ExampleOpenLinks />
           </div>
         </section>
 

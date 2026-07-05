@@ -1,0 +1,31 @@
+# Travel planning with optional stage weights (N)name.
+# Weights among siblings must add up to 100 at each level where they are used.
+
+name: Patagonia trip
+range: 0..5
+
+stages:
+  (50)planning:
+    (40)research:
+      destination: 5
+      dates: 4
+      activities: 3
+    (35)budget:
+      flights: 4
+      lodging: 3
+      daily_costs: 2
+    (25)logistics:
+      visas: 5
+      insurance: 4
+      packing_list: 2
+  (30)booking:
+    transport:
+      flights: 5
+      airport_transfer: 3
+    stays:
+      hotels: 4
+      camps: 1
+  (20)travel:
+    outbound: 5
+    on_the_road: 2
+    return: 0

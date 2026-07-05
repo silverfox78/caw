@@ -122,6 +122,53 @@
   min-width: 0;
 }
 
+.example-load-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.example-load-buttons__label {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  text-align: center;
+}
+
+.example-load-buttons__group {
+  display: flex;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.example-load-buttons__group .btn {
+  flex: 1;
+  min-width: 0;
+}
+
+.example-load-buttons--toolbar {
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.example-load-buttons--toolbar .example-load-buttons__group {
+  width: auto;
+}
+
+.example-open-links {
+  display: contents;
+}
+
+.project-view__toolbar .example-load-buttons--toolbar .example-load-buttons__group .btn {
+  flex: none;
+}
+
 .load-prompt__back {
   margin-top: var(--space-xl);
   justify-content: center;

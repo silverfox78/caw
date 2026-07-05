@@ -130,5 +130,11 @@ export function validateProjectDocument(doc, raw = '') {
   }
 }
 
-export const TEMPLATE_URL = `${import.meta.env.BASE_URL}examples/template.yml`
-export const EXAMPLE_URL = `${import.meta.env.BASE_URL}examples/house.yml`
+export {
+  EXAMPLE_URL,
+  getExampleById,
+  PROJECT_EXAMPLES,
+  resolveExampleFromSearchParam,
+  TEMPLATE_URL,
+  TRAVEL_EXAMPLE_URL,
+} from './projectExamples.js'

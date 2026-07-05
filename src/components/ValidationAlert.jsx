@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { EXAMPLE_URL, TEMPLATE_URL } from '../utils/validateProject.js'
+import { ExampleDownloadLinks } from './ExampleButtons.jsx'
+import { TEMPLATE_URL } from '../utils/validateProject.js'
 
 function ValidationAlert({ validation, fileName, parseError }) {
   const issues = parseError
@@ -48,9 +49,7 @@ function ValidationAlert({ validation, fileName, parseError }) {
           <a href={TEMPLATE_URL} download="template.yml" className="btn btn-secondary btn--compact">
             Download template
           </a>
-          <a href={EXAMPLE_URL} download="house.yml" className="btn btn-secondary btn--compact">
-            Download example
-          </a>
+          <ExampleDownloadLinks compact />
         </div>
       </div>
     </div>

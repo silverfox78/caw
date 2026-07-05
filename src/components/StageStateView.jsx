@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import PieChart from './PieChart.jsx'
+import OverallProgressHero from './OverallProgressHero.jsx'
+import ProgressShareLabel from './ProgressShareLabel.jsx'
 import StageTreeView from './StageTreeView.jsx'
 import {
   analyzeProject,
   buildChartSegments,
   findStageRoot,
-  formatPercent,
 } from '../utils/stageAnalysis.js'
 
 function StageStateView({ parsed }) {
@@ -53,10 +54,10 @@ function StageStateView({ parsed }) {
 
           <div className="state-view__summary">
             <p className="state-view__overall-label">Project progress</p>
-            <p className="state-view__overall-value">
-              {formatPercent(analysis.overall)}
-              <span className="state-view__overall-unit">%</span>
-            </p>
+            <OverallProgressHero
+              overall={analysis.overall}
+              segmentColors={segments.map((segment) => segment.color)}
+            />
 
             <table className="state-view__table">
               <thead>
@@ -96,7 +97,13 @@ function StageStateView({ parsed }) {
                         />
                         {root.label}
                       </td>
-                      <td>{formatPercent(root.progress)}%</td>
+                      <td>
+                        <ProgressShareLabel
+                          progress={root.progress}
+                          share={root.share ?? 100}
+                          displayProgress={root.displayProgress ?? root.progress}
+                        />
+                      </td>
                     </tr>
                   )
                 })}
@@ -127,7 +134,11 @@ function StageStateView({ parsed }) {
             />
             <h2 className="state-view__detail-title">{activeStage.label}</h2>
             <span className="state-view__detail-progress">
-              {formatPercent(activeStage.progress)}%
+              <ProgressShareLabel
+                progress={activeStage.progress}
+                share={activeStage.share ?? 100}
+                displayProgress={activeStage.displayProgress ?? activeStage.progress}
+              />
             </span>
           </header>
         ) : null}

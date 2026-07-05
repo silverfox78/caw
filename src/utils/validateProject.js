@@ -33,6 +33,34 @@ function buildFriendlyMessage(missing, duplicates, typeErrors) {
   return parts
 }
 
+import {
+  parseWeightedStageKey,
+  validateSiblingWeightTotals,
+} from './stageWeights.js'
+
+function validateStagesWeightTotals(stages, path = '') {
+  if (!stages || typeof stages !== 'object' || Array.isArray(stages)) {
+    return []
+  }
+
+  const entries = Object.entries(stages)
+  const errors = validateSiblingWeightTotals(
+    entries,
+    ([rawKey]) => parseWeightedStageKey(rawKey).weight,
+    path,
+  )
+
+  for (const [rawKey, value] of entries) {
+    if (value != null && typeof value === 'object' && !Array.isArray(value)) {
+      const { key } = parseWeightedStageKey(rawKey)
+      const childPath = path ? `${path} → ${key}` : key
+      errors.push(...validateStagesWeightTotals(value, childPath))
+    }
+  }
+
+  return errors
+}
+
 export function validateProjectDocument(doc, raw = '') {
   const missing = []
   const duplicates = []
@@ -74,6 +102,15 @@ export function validateProjectDocument(doc, raw = '') {
     (doc.stages === null || typeof doc.stages !== 'object')
   ) {
     typeErrors.push('`stages` must be a nested map or list of stage entries.')
+  }
+
+  if (
+    !missing.includes('stages') &&
+    doc.stages != null &&
+    typeof doc.stages === 'object' &&
+    !Array.isArray(doc.stages)
+  ) {
+    typeErrors.push(...validateStagesWeightTotals(doc.stages))
   }
 
   // Stage leaves without a numeric value, list items (`- item`), and null entries are allowed and normalized to 0.

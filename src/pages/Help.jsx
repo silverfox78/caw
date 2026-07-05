@@ -40,12 +40,44 @@ function Help() {
         </section>
 
         <section className="help-view__section">
+          <h2>Optional: stage weights</h2>
+          <p className="help-view__intro">
+            Prefix a stage name with a number in parentheses to set its share among siblings.
+            Values must be between 0 and 100. When you use weights at a level, they must add up
+            to 100.
+          </p>
+          <pre>{`stages:
+  (70)planning:
+    research: 4
+    budget: 3
+  (10)execution:
+    setup: 5
+    delivery: 2
+  (20)wrap_up: 3`}</pre>
+          <ul className="help-view__list">
+            <li>
+              <code>(70)planning</code> means planning represents 70% of its parent level.
+            </li>
+            <li>Sibling weights must total 100. CAW rejects files where they sum to more than 100.</li>
+            <li>
+              If some siblings omit a weight, the remaining percentage is split among them. If
+              stated weights total less than 100 with no unweighted siblings, they are scaled
+              proportionally.
+            </li>
+            <li>
+              In State and Edition, progress is shown as achieved share vs. cap (e.g.{' '}
+              <code>49% / 70%</code>).
+            </li>
+          </ul>
+        </section>
+
+        <section className="help-view__section">
           <h2>Rules of thumb</h2>
           <ul className="help-view__list">
             <li>Use spaces for indentation (two spaces per level is a good default).</li>
             <li>Only numeric leaves count toward progress; missing leaves are treated as the minimum of <code>range</code>.</li>
             <li>Child stages may be written as a map or as a YAML list with <code>- item</code>; lists are normalized automatically.</li>
-            <li>Parent progress is the average of their children, rolled up through the tree.</li>
+            <li>Parent progress rolls up from children; optional weights change how siblings contribute (see above).</li>
             <li>Lines starting with <code>#</code> are comments and are ignored.</li>
             <li>Do not repeat <code>name</code>, <code>range</code>, or <code>stages</code> at the top level.</li>
           </ul>

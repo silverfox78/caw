@@ -1,11 +1,11 @@
-import {
-  formatPercent,
-  getDepthTone,
-  getStageTreeMaxDepth,
-} from '../utils/stageAnalysis.js'
+import ProgressShareLabel from './ProgressShareLabel.jsx'
+import { getDepthTone, getStageTreeMaxDepth } from '../utils/stageAnalysis.js'
 
-function StageTreeNode({ node, depth, maxDepth, stageColor }) {
+function StageTreeNode({ node, depth, maxDepth, stageColor, parentShare }) {
   const tone = getDepthTone(stageColor, depth, maxDepth)
+  const displayProgress = node.displayProgress ?? node.progress
+  const share = node.share ?? parentShare ?? 100
+  const barProgress = share > 0 ? (displayProgress / share) * 100 : node.progress
 
   return (
     <>
@@ -15,11 +15,17 @@ function StageTreeNode({ node, depth, maxDepth, stageColor }) {
           paddingLeft: `calc(${depth} * 1.35rem + 1rem)`,
           '--tree-fill': tone.fill,
           '--tree-text': tone.text,
-          '--tree-progress': `${node.progress}%`,
+          '--tree-progress': `${barProgress}%`,
         }}
       >
         <span className="stage-tree__label">{node.label}</span>
-        <span className="stage-tree__progress">{formatPercent(node.progress)}%</span>
+        <span className="stage-tree__progress">
+          <ProgressShareLabel
+            progress={node.progress}
+            share={share}
+            displayProgress={displayProgress}
+          />
+        </span>
       </div>
       {node.children.map((child) => (
         <StageTreeNode
@@ -28,6 +34,7 @@ function StageTreeNode({ node, depth, maxDepth, stageColor }) {
           depth={depth + 1}
           maxDepth={maxDepth}
           stageColor={stageColor}
+          parentShare={share}
         />
       ))}
     </>
@@ -62,6 +69,7 @@ function StageTreeView({ stage, stageColor }) {
           depth={0}
           maxDepth={maxDepth}
           stageColor={stageColor}
+          parentShare={stage.share ?? 100}
         />
       ))}
     </div>

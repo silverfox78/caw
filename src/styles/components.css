@@ -136,3 +136,26 @@
   cursor: not-allowed;
   transform: none;
 }
+
+.progress-share {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.12em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.progress-share__achieved {
+  color: var(--color-accent-hot);
+  font-weight: 700;
+}
+
+.progress-share__sep {
+  color: var(--color-text-faint);
+  font-weight: 500;
+}
+
+.progress-share__cap {
+  color: var(--color-accent);
+  font-weight: 700;
+}

@@ -1,4 +1,11 @@
 import { formatPercent, parseRange, valueToProgress } from './stageAnalysis.js'
+import {
+  computeNodeShare,
+  parseWeightedStageKey,
+  resolveSiblingWeights,
+  validateSiblingWeightTotals,
+  weightedAverage,
+} from './stageWeights.js'
 
 let nextId = 0
 
@@ -68,11 +75,27 @@ export function computeEditNodeProgress(node, rangeMin, rangeMax) {
     return valueToProgress(range.min, range)
   }
 
+  const weights = resolveSiblingWeights(
+    node.children.map((child) => ({ weight: parseWeightedStageKey(child.key).weight })),
+  )
   const childProgresses = node.children.map((child) =>
     computeEditNodeProgress(child, rangeMin, rangeMax),
   )
 
-  return childProgresses.reduce((sum, progress) => sum + progress, 0) / childProgresses.length
+  return weightedAverage(childProgresses, weights)
+}
+
+export function computeEditNodeMetrics(node, siblings, rangeMin, rangeMax, parentShare = 100) {
+  const progress = computeEditNodeProgress(node, rangeMin, rangeMax)
+  const share = computeNodeShare(
+    siblings,
+    node.id,
+    (sibling) => parseWeightedStageKey(sibling.key).weight,
+    parentShare,
+  )
+  const displayProgress = (progress * share) / 100
+
+  return { progress, share, displayProgress }
 }
 
 export function createBranchNode() {
@@ -85,9 +108,24 @@ export function createLeafNode(value = 0) {
 
 function validateStageNodes(nodes, rangeMin, rangeMax, path, fieldErrors, messages) {
   const keys = new Set()
+  const weightErrors = validateSiblingWeightTotals(
+    nodes,
+    (node) => parseWeightedStageKey(node.key).weight,
+    path || undefined,
+  )
+
+  for (const message of weightErrors) {
+    messages.push(message)
+
+    for (const node of nodes) {
+      if (parseWeightedStageKey(node.key).weight != null && !fieldErrors[`${node.id}-key`]) {
+        fieldErrors[`${node.id}-key`] = 'Weights at this level exceed 100%.'
+      }
+    }
+  }
 
   for (const node of nodes) {
-    const key = node.key.trim()
+    const key = parseWeightedStageKey(node.key).key
 
     if (!key) {
       fieldErrors[`${node.id}-key`] = 'Stage name is required.'

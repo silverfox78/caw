@@ -400,14 +400,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2.75rem;
+  min-width: 3.75rem;
   height: 1.75rem;
   padding: 0 0.45rem;
   border-radius: calc(var(--radius-sm) - 2px);
   background: hsl(var(--stage-hue) 52% 38% / 0.35);
   border: 1px solid hsl(var(--stage-hue) 48% 52% / 0.45);
   font-family: var(--font-ui);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--color-text);

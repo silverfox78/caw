@@ -1,17 +1,19 @@
 import { useState } from 'react'
 import StageIconButton from './StageIconButton.jsx'
+import ProgressShareLabel from './ProgressShareLabel.jsx'
 import {
   addChildToTree,
-  computeEditNodeProgress,
+  computeEditNodeMetrics,
   createBranchNode,
   createLeafNode,
   removeNodeFromTree,
   updateNodeInTree,
 } from '../utils/stageEditTree.js'
-import { formatPercent } from '../utils/stageAnalysis.js'
 
 function StageNode({
   node,
+  siblings,
+  parentShare,
   depth,
   hue,
   rangeMin,
@@ -46,12 +48,17 @@ function StageNode({
     )
   }
 
-  const progress = computeEditNodeProgress(node, rangeMin, rangeMax)
-  const progressLabel = `${formatPercent(progress)}%`
+  const { progress, share, displayProgress } = computeEditNodeMetrics(
+    node,
+    siblings,
+    rangeMin,
+    rangeMax,
+    parentShare,
+  )
 
   const progressTitle = isBranch
     ? hasChildren
-      ? `Average progress across ${node.children.length} children`
+      ? `Progress across ${node.children.length} children`
       : 'No children yet — 0%'
     : 'Progress from value'
 
@@ -75,10 +82,10 @@ function StageNode({
         )}
 
         <span
-          className={`stage-card__progress${progress === 0 ? ' stage-card__progress--zero' : ''}`}
+          className={`stage-card__progress${displayProgress === 0 ? ' stage-card__progress--zero' : ''}`}
           title={progressTitle}
         >
-          {progressLabel}
+          <ProgressShareLabel progress={progress} share={share} displayProgress={displayProgress} />
         </span>
 
         <div className="stage-card__fields">
@@ -155,6 +162,8 @@ function StageNode({
                     <StageNode
                       key={child.id}
                       node={child}
+                      siblings={node.children}
+                      parentShare={share}
                       depth={depth + 1}
                       hue={hue}
                       rangeMin={rangeMin}
@@ -198,6 +207,8 @@ function StageEditor({ nodes, onChange, rangeMin, rangeMax, fieldErrors }) {
             <StageNode
               key={node.id}
               node={node}
+              siblings={nodes}
+              parentShare={100}
               depth={0}
               hue={Math.round((22 + index * (360 / Math.max(nodes.length, 1))) % 360)}
               rangeMin={rangeMin}

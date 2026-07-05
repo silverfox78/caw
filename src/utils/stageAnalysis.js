@@ -37,11 +37,19 @@ export function valueToProgress(value, range) {
 }
 
 import { normalizeStages } from './stageNormalize.js'
+import {
+  applyShareMetrics,
+  parseWeightedStageKey,
+  resolveSiblingWeights,
+  weightedAverage,
+} from './stageWeights.js'
 
-function finalizeNode(key, node, range) {
+function finalizeNode(rawKey, node, range) {
+  const { key, weight } = parseWeightedStageKey(rawKey)
+
   if (typeof node === 'number' && Number.isFinite(node)) {
     const progress = valueToProgress(node, range)
-    return { key, label: formatLabel(key), progress, isLeaf: true, children: [] }
+    return { key, label: formatLabel(key), progress, weight, isLeaf: true, children: [] }
   }
 
   if (typeof node === 'string') {
@@ -49,24 +57,32 @@ function finalizeNode(key, node, range) {
     const numeric = trimmed === '' ? range.min : Number(trimmed)
     const value = Number.isFinite(numeric) ? numeric : range.min
     const progress = valueToProgress(value, range)
-    return { key, label: formatLabel(key), progress, isLeaf: true, children: [] }
+    return { key, label: formatLabel(key), progress, weight, isLeaf: true, children: [] }
   }
 
   if (node == null || typeof node !== 'object' || Array.isArray(node)) {
     const progress = valueToProgress(range.min, range)
-    return { key, label: formatLabel(key), progress, isLeaf: true, children: [] }
+    return { key, label: formatLabel(key), progress, weight, isLeaf: true, children: [] }
   }
 
   const children = Object.entries(node).map(([childKey, childNode]) =>
     finalizeNode(childKey, childNode, range),
   )
 
+  const weights = resolveSiblingWeights(children)
   const progress =
     children.length > 0
-      ? children.reduce((sum, child) => sum + child.progress, 0) / children.length
+      ? weightedAverage(
+          children.map((child) => child.progress),
+          weights,
+        )
       : valueToProgress(range.min, range)
 
-  return { key, label: formatLabel(key), progress, isLeaf: false, children }
+  return { key, label: formatLabel(key), progress, weight, isLeaf: false, children }
+}
+
+export function annotateShares(nodes, parentShare = 100) {
+  return applyShareMetrics(nodes, parentShare)
 }
 
 export function formatLabel(key) {
@@ -99,13 +115,18 @@ export function analyzeProject(doc) {
   const roots = Object.entries(stages).map(([key, node]) =>
     finalizeNode(key, node, range),
   )
+  const annotatedRoots = annotateShares(roots)
 
+  const weights = resolveSiblingWeights(annotatedRoots)
   const overall =
-    roots.length > 0
-      ? roots.reduce((sum, root) => sum + root.progress, 0) / roots.length
+    annotatedRoots.length > 0
+      ? weightedAverage(
+          annotatedRoots.map((root) => root.progress),
+          weights,
+        )
       : 0
 
-  return { error: null, roots, overall, range }
+  return { error: null, roots: annotatedRoots, overall, range }
 }
 
 export function findStageRoot(roots, key) {
@@ -180,20 +201,30 @@ function pickSegmentColors(index, total) {
 }
 
 export function buildChartSegments(roots) {
-  const count = roots.length || 1
-  const sliceAngle = 360 / count
+  if (!roots.length) {
+    return []
+  }
+
+  const weights = resolveSiblingWeights(roots)
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0) || 1
+  let angle = 0
 
   return roots.map((root, index) => {
-    const colors = pickSegmentColors(index, count)
+    const sliceAngle = (weights[index] / totalWeight) * 360
+    const colors = pickSegmentColors(index, roots.length)
 
-    return {
+    const segment = {
       key: root.key,
       label: root.label,
       progress: root.progress,
+      weight: weights[index],
       color: colors.color,
       colorProgress: colors.colorProgress,
-      startAngle: index * sliceAngle,
-      endAngle: (index + 1) * sliceAngle,
+      startAngle: angle,
+      endAngle: angle + sliceAngle,
     }
+
+    angle += sliceAngle
+    return segment
   })
 }

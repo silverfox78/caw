@@ -139,6 +139,30 @@
   color: var(--color-text);
 }
 
+.btn--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.btn--icon .ui-icon {
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.btn-primary.btn--icon .ui-icon {
+  color: var(--color-bg-deep);
+}
+
+.btn-secondary.btn--icon .ui-icon {
+  color: var(--color-accent);
+}
+
+.ui-icon {
+  display: block;
+}
+
 .divider {
   width: 3rem;
   height: 1px;

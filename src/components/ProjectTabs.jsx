@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next'
+
 function ProjectTabs({ activeTab, onChange }) {
+  const { t } = useTranslation()
+
   return (
     <div className="project-tabs-wrap">
       <hr className="project-tabs__rule" aria-hidden="true" />
-      <div className="project-tabs" role="tablist" aria-label="Project views">
+      <div className="project-tabs" role="tablist" aria-label={t('project.tabsAria')}>
         <button
           type="button"
           role="tab"
@@ -12,7 +16,7 @@ function ProjectTabs({ activeTab, onChange }) {
           className={`project-tabs__tab${activeTab === 'state' ? ' project-tabs__tab--active' : ''}`}
           onClick={() => onChange('state')}
         >
-          State
+          {t('tabs.state')}
         </button>
         <button
           type="button"
@@ -23,7 +27,7 @@ function ProjectTabs({ activeTab, onChange }) {
           className={`project-tabs__tab${activeTab === 'source' ? ' project-tabs__tab--active' : ''}`}
           onClick={() => onChange('source')}
         >
-          Source
+          {t('tabs.source')}
         </button>
         <button
           type="button"
@@ -34,7 +38,7 @@ function ProjectTabs({ activeTab, onChange }) {
           className={`project-tabs__tab${activeTab === 'edition' ? ' project-tabs__tab--active' : ''}`}
           onClick={() => onChange('edition')}
         >
-          Edition
+          {t('tabs.edition')}
         </button>
       </div>
     </div>

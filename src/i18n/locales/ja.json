@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "戻る",
+    "home": "ホーム",
+    "loading": "読み込み中…",
+    "loadingExample": "サンプルを読み込み中…",
+    "origin": "元ファイル",
+    "file": "ファイル",
+    "color": "色",
+    "mood": "状態",
+    "name": "名前",
+    "value": "値",
+    "from": "最小",
+    "to": "最大"
+  },
+  "lang": {
+    "switchAria": "言語を選択"
+  },
+  "mobile": {
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "loaderHint": "上部のメニューからファイル選択、サンプル表示、形式ガイドを利用できます。"
+  },
+  "home": {
+    "eyebrow": "フィールドノート",
+    "tagline": "...今日の進捗は？",
+    "cta": "進捗を見る"
+  },
+  "examples": {
+    "basic": {
+      "label": "基本サンプル",
+      "shortLabel": "基本",
+      "description": "家の建設 — 深いステージツリー、重みなし"
+    },
+    "advanced": {
+      "label": "上級サンプル",
+      "shortLabel": "上級",
+      "description": "パタゴニア旅行 — 複数レベルで任意の重み"
+    },
+    "tryLabel": "またはサンプルを試す",
+    "open": "{{name}}サンプルを開く",
+    "download": "{{name}}サンプルをダウンロード"
+  },
+  "loader": {
+    "eyebrow": "プロジェクトローダー",
+    "title": ".yml ファイルを選択",
+    "hint": "ローカルの YAML ファイルを選ぶか、組み込みの基本・上級サンプルを開いてください。",
+    "chooseFile": "ファイルを選択",
+    "helpLink": "ファイル形式のヘルプが必要ですか？",
+    "unknownExample": "不明なサンプルです。",
+    "parseError": "YAML ファイルを解析できませんでした。",
+    "loadExampleError": "サンプルを読み込めませんでした。",
+    "readFileError": "ファイルを読み込めませんでした。",
+    "httpError": "サンプルを読み込めませんでした（HTTP {{status}}）。"
+  },
+  "project": {
+    "context": "進捗を見る",
+    "changeFile": "ファイルを変更",
+    "formatGuide": "形式ガイド",
+    "tabsAria": "プロジェクトビュー"
+  },
+  "tabs": {
+    "state": "状態",
+    "source": "ソース",
+    "edition": "編集"
+  },
+  "state": {
+    "projectProgress": "プロジェクト進捗",
+    "stage": "ステージ",
+    "progress": "進捗",
+    "missionStatus": "ミッション状況",
+    "globalProgress": "全体進捗",
+    "share": "割合",
+    "done": "完了",
+    "total": "合計",
+    "shareTitle": "割合",
+    "progressTitle": "進捗",
+    "participationTitle": "プロジェクト全体への寄与",
+    "breakdown": "ステージの内訳",
+    "breakdownNamed": "{{name}} の内訳",
+    "switchV2": "ミッションボードに切り替え（v2）",
+    "switchV1": "クラシック表示に切り替え（v1）",
+    "treeHover": "チャートまたは表のステージにカーソルを合わせると内訳が表示されます。",
+    "treeEmpty": "このステージにサブステージはありません。",
+    "progressTooltip": "プロジェクト {{cap}}% のうち {{achieved}}%（ステージ内 {{internal}}% 完了）",
+    "progressTooltipSimple": "{{internal}}% 完了",
+    "chartAria": "プロジェクトステージの進捗",
+    "noStagesChart": "ステージなし"
+  },
+  "edition": {
+    "stages": "ステージ",
+    "addItem": "項目を追加",
+    "addSubItem": "サブ項目を追加",
+    "expand": "展開",
+    "collapse": "折りたたむ",
+    "remove": "{{name}} を削除",
+    "removeFallback": "ステージ",
+    "stageName": "ステージ名",
+    "stageValue": "ステージ値",
+    "shareTitle": "兄弟間の割合",
+    "progressTitle": "ステージ内の進捗",
+    "totalTitle": "プロジェクト全体への寄与",
+    "noStages": "ステージがありません。項目を追加して始めましょう。",
+    "noSubItems": "サブ項目がありません — + で追加してください。",
+    "applyChanges": "変更を適用",
+    "changesApplied": "変更を適用しました。",
+    "fixFields": "適用する前にハイライトされたフィールドを修正してください。"
+  },
+  "yaml": {
+    "copy": "コピー",
+    "copied": "コピーしました",
+    "download": "ダウンロード",
+    "sourceAria": "YAML ソース"
+  },
+  "validation": {
+    "eyebrow": "形式チェック",
+    "title": "このファイルは少し手直しが必要です",
+    "parseSummary": "YAML を解析できませんでした。インデント、コロン、引用符を確認してください。",
+    "defaultSummary": "ファイル形式に問題があります。有効なプロジェクトには `name`、`range`、`stages` が必要です。",
+    "fallbackIssue": "ファイル形式を検証できませんでした。",
+    "syntaxError": "YAML 構文エラー: {{message}}",
+    "formatGuide": "形式ガイド",
+    "downloadTemplate": "テンプレートをダウンロード"
+  },
+  "help": {
+    "eyebrow": "プロジェクト形式",
+    "title": ".yml ファイルの準備方法",
+    "intro": "CAW はシンプルな YAML ドキュメントを読み込みます。次の3つのトップレベルフィールドは必須で、それぞれ1回だけ記述してください。",
+    "requiredFields": "必須フィールド",
+    "nameTitle": "name",
+    "nameDesc": "アプリに表示されるプロジェクトの読みやすいタイトル。",
+    "rangeTitle": "range",
+    "rangeDesc": "リーフ値の進捗スケール。最小値と最大値は .. で区切ります。",
+    "stagesTitle": "stages",
+    "stagesDesc": "ネストされたステージツリー。ブランチはオブジェクト、リーフは範囲内の数値です。",
+    "rulesTitle": "覚えておくこと",
+    "rule1": "インデントにはスペースを使います（レベルごとに2スペースがおすすめ）。",
+    "rule2": "数値のリーフだけが進捗にカウントされます。欠けているリーフは range の最小値として扱われます。",
+    "rule3": "子ステージはマップまたは - item の YAML リストで書けます。リストは自動的に正規化されます。",
+    "rule4": "親の進捗は子の平均で、ツリーを上に伝播します。",
+    "rule5": "# で始まる行はコメントで無視されます。",
+    "rule6": "トップレベルで name、range、stages を繰り返さないでください。",
+    "startTitle": "ファイルから始める",
+    "startIntro": "最小テンプレートまたは家の完全サンプルをダウンロードし、ローカルで編集して CAW に再読み込みしてください。",
+    "downloadTemplate": "テンプレートをダウンロード",
+    "downloadHouse": "家のサンプルをダウンロード",
+    "openHouse": "家のサンプルを開く",
+    "backToLoader": "ローダーに戻る"
+  }
+}

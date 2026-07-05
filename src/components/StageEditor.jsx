@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import StageIconButton from './StageIconButton.jsx'
 import {
   addChildToTree,
@@ -39,6 +40,7 @@ function StageTableRow({
   fieldErrors,
   onChange,
 }) {
+  const { t } = useTranslation()
   const [collapsed, setCollapsed] = useState(true)
   const isBranch = node.kind === 'branch'
   const hasChildren = isBranch && node.children.length > 0
@@ -85,7 +87,7 @@ function StageTableRow({
           {isBranch ? (
             <StageIconButton
               icon={collapsed ? 'expand' : 'collapse'}
-              label={collapsed ? 'Expand' : 'Collapse'}
+              label={collapsed ? t('edition.expand') : t('edition.collapse')}
               variant="toggle"
               className={collapsed ? 'stage-icon-btn--closed' : 'stage-icon-btn--open'}
               onClick={() => setCollapsed((current) => !current)}
@@ -101,10 +103,10 @@ function StageTableRow({
             type="text"
             className={`edition-input edition-input--compact stage-table__input-name${keyError ? ' edition-input--invalid' : ''}`}
             value={node.key}
-            placeholder="Name"
+            placeholder={t('common.name')}
             onChange={(event) => patchNode({ key: event.target.value })}
             aria-invalid={Boolean(keyError)}
-            aria-label="Stage name"
+            aria-label={t('edition.stageName')}
             aria-describedby={keyError ? `${node.id}-key-error` : undefined}
           />
         </span>
@@ -113,17 +115,17 @@ function StageTableRow({
           <StageProgressBar value={progress} hue={hue} />
         </span>
 
-        <span className="stage-table__cell stage-table__cell--metric" title="Share among siblings">
+        <span className="stage-table__cell stage-table__cell--metric" title={t('edition.shareTitle')}>
           {formatPercent(share)}%
         </span>
 
-        <span className="stage-table__cell stage-table__cell--metric" title="Progress within stage">
+        <span className="stage-table__cell stage-table__cell--metric" title={t('edition.progressTitle')}>
           {formatPercent(progress)}%
         </span>
 
         <span
           className="stage-table__cell stage-table__cell--metric stage-table__cell--total"
-          title="Contribution to project total"
+          title={t('edition.totalTitle')}
         >
           {formatPercent(displayProgress)}%
         </span>
@@ -140,7 +142,7 @@ function StageTableRow({
               placeholder="Val"
               onChange={(event) => patchNode({ value: event.target.value })}
               aria-invalid={Boolean(valueError)}
-              aria-label="Stage value"
+              aria-label={t('edition.stageValue')}
               aria-describedby={valueError ? `${node.id}-value-error` : undefined}
             />
           ) : (
@@ -151,13 +153,15 @@ function StageTableRow({
         </span>
 
         <span className="stage-table__cell stage-table__cell--action">
-          <StageIconButton icon="addItem" label="Add sub-item" onClick={addChild} />
+          <StageIconButton icon="addItem" label={t('edition.addSubItem')} onClick={addChild} />
         </span>
 
         <span className="stage-table__cell stage-table__cell--action">
           <StageIconButton
             icon="remove"
-            label={`Remove ${node.key || 'stage'}`}
+            label={t('edition.remove', {
+              name: node.key || t('edition.removeFallback'),
+            })}
             variant="danger"
             onClick={removeSelf}
           />
@@ -198,7 +202,7 @@ function StageTableRow({
                 />
               ))
             ) : (
-              <p className="stage-table__empty">No sub-items yet — use + to add one.</p>
+              <p className="stage-table__empty">{t('edition.noSubItems')}</p>
             )}
           </div>
         </div>
@@ -208,6 +212,8 @@ function StageTableRow({
 }
 
 function StageEditor({ nodes, onChange, rangeMin, rangeMax, fieldErrors }) {
+  const { t } = useTranslation()
+
   const addRoot = () => {
     onChange((current) => addChildToTree(current, null, createLeafNode(rangeMin)))
   }
@@ -215,26 +221,26 @@ function StageEditor({ nodes, onChange, rangeMin, rangeMax, fieldErrors }) {
   return (
     <div className="stage-editor">
       <div className="stage-editor__header">
-        <h3 className="stage-editor__title">Stages</h3>
+        <h3 className="stage-editor__title">{t('edition.stages')}</h3>
         <div className="stage-editor__header-actions">
-          <StageIconButton icon="addItem" label="Add item" onClick={addRoot} />
+          <StageIconButton icon="addItem" label={t('edition.addItem')} onClick={addRoot} />
         </div>
       </div>
 
       {nodes.length === 0 ? (
-        <p className="stage-editor__empty">No stages yet. Add an item to begin.</p>
+        <p className="stage-editor__empty">{t('edition.noStages')}</p>
       ) : (
         <div className="stage-table">
           <div className="stage-table__head">
             <span className="stage-table__cell stage-table__cell--toggle" aria-hidden="true" />
-            <span className="stage-table__cell stage-table__cell--name">Name</span>
-            <span className="stage-table__cell stage-table__cell--bar">Progress</span>
-            <span className="stage-table__cell stage-table__cell--metric">Share</span>
-            <span className="stage-table__cell stage-table__cell--metric">Done</span>
+            <span className="stage-table__cell stage-table__cell--name">{t('common.name')}</span>
+            <span className="stage-table__cell stage-table__cell--bar">{t('state.progress')}</span>
+            <span className="stage-table__cell stage-table__cell--metric">{t('state.share')}</span>
+            <span className="stage-table__cell stage-table__cell--metric">{t('state.done')}</span>
             <span className="stage-table__cell stage-table__cell--metric stage-table__cell--total">
-              Total
+              {t('state.total')}
             </span>
-            <span className="stage-table__cell stage-table__cell--value">Value</span>
+            <span className="stage-table__cell stage-table__cell--value">{t('common.value')}</span>
             <span className="stage-table__cell stage-table__cell--action" aria-hidden="true" />
             <span className="stage-table__cell stage-table__cell--action" aria-hidden="true" />
           </div>

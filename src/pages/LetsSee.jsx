@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { load as parseYaml } from 'js-yaml'
 import PageShell from '../components/PageShell.jsx'
 import ProjectTabs from '../components/ProjectTabs.jsx'
@@ -9,6 +10,7 @@ import YamlHighlight from '../components/YamlHighlight.jsx'
 import ProjectEditionForm from '../components/ProjectEditionForm.jsx'
 import ExampleLoadButtons from '../components/ExampleButtons.jsx'
 import CawIcon from '../components/CawIcon.jsx'
+import { useRegisterMobileActions } from '../context/MobileActionsContext.jsx'
 import { getExampleById, resolveExampleFromSearchParam } from '../utils/projectExamples.js'
 import { validateProjectDocument } from '../utils/validateProject.js'
 import { sanitizeProjectDocument } from '../utils/sanitizeProject.js'
@@ -18,36 +20,28 @@ function LoadPrompt({
   onLoadExample,
   loading,
   loadError,
-  fileInputRef,
-  onFileChange,
 }) {
+  const { t } = useTranslation()
+
   return (
     <div className="load-prompt">
-      <p className="load-prompt__eyebrow reveal reveal--1">Project loader</p>
-      <h1 className="load-prompt__title reveal reveal--2">Choose a .yml file</h1>
-      <p className="load-prompt__hint reveal reveal--3">
-        Pick a local YAML file, or open a basic or advanced built-in example.
-      </p>
+      <p className="load-prompt__eyebrow reveal reveal--1">{t('loader.eyebrow')}</p>
+      <h1 className="load-prompt__title reveal reveal--2">{t('loader.title')}</h1>
+      <p className="load-prompt__hint reveal reveal--3">{t('loader.hint')}</p>
 
       <div className="load-prompt__dropzone reveal reveal--4">
         <CawIcon size="lg" className="load-prompt__icon" alt="" />
-        <div className="load-prompt__actions">
+        <p className="load-prompt__mobile-hint">{t('mobile.loaderHint')}</p>
+        <div className="load-prompt__actions mobile-hide">
           <button
             type="button"
             className="btn btn-primary load-prompt__btn"
             onClick={onChooseFile}
           >
-            Choose file
+            {t('loader.chooseFile')}
           </button>
           <ExampleLoadButtons onLoad={onLoadExample} loading={loading} />
         </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".yml,.yaml,text/yaml,application/x-yaml"
-          className="loader__input"
-          onChange={onFileChange}
-        />
       </div>
 
       {loadError ? (
@@ -56,13 +50,13 @@ function LoadPrompt({
         </p>
       ) : null}
 
-      <p className="load-prompt__help-link">
-        <Link to="/help">Need help with the file format?</Link>
+      <p className="load-prompt__help-link mobile-hide">
+        <Link to="/help">{t('loader.helpLink')}</Link>
       </p>
 
-      <div className="actions load-prompt__back">
+      <div className="actions load-prompt__back mobile-hide">
         <Link to="/" className="btn btn-secondary">
-          Back
+          {t('common.back')}
         </Link>
       </div>
     </div>
@@ -70,6 +64,7 @@ function LoadPrompt({
 }
 
 function LetsSee() {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const exampleParam = searchParams.get('example')
   const pendingExample = resolveExampleFromSearchParam(exampleParam)
@@ -93,40 +88,43 @@ function LetsSee() {
     setValidation(null)
   }, [])
 
-  const loadFromText = useCallback((text, originLabel) => {
-    setRaw(text)
-    setSource(originLabel)
-    setActiveTab('state')
-    setLoadError('')
+  const loadFromText = useCallback(
+    (text, originLabel) => {
+      setRaw(text)
+      setSource(originLabel)
+      setActiveTab('state')
+      setLoadError('')
 
-    try {
-      const doc = parseYaml(text)
-      const result = validateProjectDocument(doc, text)
+      try {
+        const doc = parseYaml(text)
+        const result = validateProjectDocument(doc, text)
 
-      if (result.valid) {
-        const { doc: normalized, yaml } = sanitizeProjectDocument(doc)
-        setParsed(normalized)
-        setDisplayYaml(yaml)
-      } else {
-        setParsed(doc)
+        if (result.valid) {
+          const { doc: normalized, yaml } = sanitizeProjectDocument(doc)
+          setParsed(normalized)
+          setDisplayYaml(yaml)
+        } else {
+          setParsed(doc)
+          setDisplayYaml('')
+        }
+
+        setParseError('')
+        setValidation(result.valid ? null : result)
+      } catch (err) {
+        setParsed(null)
         setDisplayYaml('')
+        setParseError(err?.message ?? t('loader.parseError'))
       }
-
-      setParseError('')
-      setValidation(result.valid ? null : result)
-    } catch (err) {
-      setParsed(null)
-      setDisplayYaml('')
-      setParseError(err?.message ?? 'Could not parse the YAML file.')
-    }
-  }, [])
+    },
+    [t],
+  )
 
   const loadExample = useCallback(
     async (exampleId = 'basic') => {
       const example = getExampleById(exampleId)
 
       if (!example) {
-        setLoadError('Unknown example.')
+        setLoadError(t('loader.unknownExample'))
         return
       }
 
@@ -137,14 +135,14 @@ function LetsSee() {
         const res = await fetch(example.url)
 
         if (!res.ok) {
-          throw new Error(`Could not load the example (HTTP ${res.status}).`)
+          throw new Error(t('loader.httpError', { status: res.status }))
         }
 
         const text = await res.text()
         loadFromText(text, example.fileName)
         setSearchParams({ example: example.id }, { replace: true })
       } catch (err) {
-        setLoadError(err?.message ?? 'Could not load the example.')
+        setLoadError(err?.message ?? t('loader.loadExampleError'))
         setSource(null)
         setRaw('')
         setParsed(null)
@@ -155,7 +153,7 @@ function LetsSee() {
         setLoading(false)
       }
     },
-    [loadFromText, setSearchParams],
+    [loadFromText, setSearchParams, t],
   )
 
   useEffect(() => {
@@ -172,7 +170,7 @@ function LetsSee() {
     }
     const reader = new FileReader()
     reader.onload = () => loadFromText(String(reader.result), file.name)
-    reader.onerror = () => setLoadError('Could not read the file.')
+    reader.onerror = () => setLoadError(t('loader.readFileError'))
     reader.readAsText(file)
   }
 
@@ -180,43 +178,65 @@ function LetsSee() {
     parsed && typeof parsed === 'object' && parsed.name ? parsed.name : source
   const showLoadedView = Boolean(source && raw)
 
+  const chooseFile = useCallback(() => {
+    fileInputRef.current?.click()
+  }, [])
+
+  const mobileActions = useMemo(
+    () => ({
+      onChooseFile: chooseFile,
+      onLoadExample: loadExample,
+      loading,
+      hasLoadedFile: showLoadedView,
+    }),
+    [chooseFile, loadExample, loading, showLoadedView],
+  )
+
+  useRegisterMobileActions(mobileActions)
+
   return (
     <PageShell variant="workspace">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".yml,.yaml,text/yaml,application/x-yaml"
+        className="loader__input"
+        onChange={handleFile}
+      />
+
       {loading && !source ? (
         <div className="load-prompt load-prompt--loading">
-          <p className="load-prompt__hint">Loading example…</p>
+          <p className="load-prompt__hint">{t('common.loadingExample')}</p>
         </div>
       ) : null}
 
       {!showLoadedView && !loading ? (
         <LoadPrompt
-          onChooseFile={() => fileInputRef.current?.click()}
+          onChooseFile={chooseFile}
           onLoadExample={loadExample}
           loading={loading}
           loadError={loadError}
-          fileInputRef={fileInputRef}
-          onFileChange={handleFile}
         />
       ) : null}
 
       {showLoadedView ? (
         <div className="project-view">
           <header className="project-view__header">
-            <p className="project-view__context">Let&apos;s see what&apos;s up</p>
+            <p className="project-view__context">{t('project.context')}</p>
             <h1 className="project-view__title">{projectName}</h1>
             <p className="project-view__origin">
-              <span className="project-view__origin-label">Origin</span>
+              <span className="project-view__origin-label">{t('common.origin')}</span>
               {source}
             </p>
           </header>
 
-          <div className="project-view__toolbar">
+          <div className="project-view__toolbar mobile-hide">
             <button
               type="button"
               className="btn btn-secondary btn--compact"
-              onClick={() => fileInputRef.current?.click()}
+              onClick={chooseFile}
             >
-              Change file
+              {t('project.changeFile')}
             </button>
             <ExampleLoadButtons
               onLoad={loadExample}
@@ -225,15 +245,8 @@ function LetsSee() {
               compact
             />
             <Link to="/help" className="btn btn-secondary btn--compact">
-              Format guide
+              {t('project.formatGuide')}
             </Link>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".yml,.yaml,text/yaml,application/x-yaml"
-              className="loader__input"
-              onChange={handleFile}
-            />
           </div>
 
           {validation || parseError ? (
@@ -286,9 +299,9 @@ function LetsSee() {
             </section>
           )}
 
-          <div className="actions project-view__back">
+          <div className="actions project-view__back mobile-hide">
             <Link to="/" className="btn btn-secondary btn--compact">
-              Back
+              {t('common.back')}
             </Link>
           </div>
         </div>

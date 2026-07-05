@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "Back",
+    "home": "Home",
+    "loading": "Loading…",
+    "loadingExample": "Loading example…",
+    "origin": "Origin",
+    "file": "File",
+    "color": "Color",
+    "mood": "Mood",
+    "name": "Name",
+    "value": "Value",
+    "from": "From",
+    "to": "To"
+  },
+  "lang": {
+    "switchAria": "Select language"
+  },
+  "mobile": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "loaderHint": "Use the menu above to choose a file, open an example, or read the format guide."
+  },
+  "home": {
+    "eyebrow": "Field notes",
+    "tagline": "...how are we doing today?",
+    "cta": "Let's see what's up"
+  },
+  "examples": {
+    "basic": {
+      "label": "Basic example",
+      "shortLabel": "Basic",
+      "description": "House construction — deep stage tree, no weights"
+    },
+    "advanced": {
+      "label": "Advanced example",
+      "shortLabel": "Advanced",
+      "description": "Patagonia trip — optional weights at several levels"
+    },
+    "tryLabel": "Or try an example",
+    "open": "Open {{name}} example",
+    "download": "Download {{name}} example"
+  },
+  "loader": {
+    "eyebrow": "Project loader",
+    "title": "Choose a .yml file",
+    "hint": "Pick a local YAML file, or open a basic or advanced built-in example.",
+    "chooseFile": "Choose file",
+    "helpLink": "Need help with the file format?",
+    "unknownExample": "Unknown example.",
+    "parseError": "Could not parse the YAML file.",
+    "loadExampleError": "Could not load the example.",
+    "readFileError": "Could not read the file.",
+    "httpError": "Could not load the example (HTTP {{status}})."
+  },
+  "project": {
+    "context": "Let's see what's up",
+    "changeFile": "Change file",
+    "formatGuide": "Format guide",
+    "tabsAria": "Project views"
+  },
+  "tabs": {
+    "state": "State",
+    "source": "Source",
+    "edition": "Edition"
+  },
+  "state": {
+    "projectProgress": "Project progress",
+    "stage": "Stage",
+    "progress": "Progress",
+    "missionStatus": "Mission status",
+    "globalProgress": "Global progress",
+    "share": "Share",
+    "done": "Done",
+    "total": "Total",
+    "shareTitle": "Share",
+    "progressTitle": "Progress",
+    "participationTitle": "Contribution to project total",
+    "breakdown": "Stage breakdown",
+    "breakdownNamed": "{{name}} breakdown",
+    "switchV2": "Switch to mission board (v2)",
+    "switchV1": "Switch to classic summary (v1)",
+    "treeHover": "Hover a stage in the chart or table to explore its breakdown.",
+    "treeEmpty": "This stage has no sub-stages.",
+    "progressTooltip": "{{achieved}}% of {{cap}}% project share ({{internal}}% complete within stage)",
+    "progressTooltipSimple": "{{internal}}% complete",
+    "chartAria": "Project stages progress",
+    "noStagesChart": "No stages"
+  },
+  "edition": {
+    "stages": "Stages",
+    "addItem": "Add item",
+    "addSubItem": "Add sub-item",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "remove": "Remove {{name}}",
+    "removeFallback": "stage",
+    "stageName": "Stage name",
+    "stageValue": "Stage value",
+    "shareTitle": "Share among siblings",
+    "progressTitle": "Progress within stage",
+    "totalTitle": "Contribution to project total",
+    "noStages": "No stages yet. Add an item to begin.",
+    "noSubItems": "No sub-items yet — use + to add one.",
+    "applyChanges": "Apply changes",
+    "changesApplied": "Changes applied.",
+    "fixFields": "Fix the highlighted fields before applying."
+  },
+  "yaml": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "sourceAria": "YAML source"
+  },
+  "validation": {
+    "eyebrow": "Format check",
+    "title": "This file needs a little work",
+    "parseSummary": "We could not parse the YAML. Check indentation, colons, and quotes.",
+    "defaultSummary": "There is a problem with the file format. A valid project needs `name`, `range`, and `stages`.",
+    "fallbackIssue": "The file format could not be validated.",
+    "syntaxError": "YAML syntax error: {{message}}",
+    "formatGuide": "Format guide",
+    "downloadTemplate": "Download template"
+  },
+  "help": {
+    "eyebrow": "Project format",
+    "title": "How to prepare your .yml file",
+    "intro": "CAW reads a simple YAML document. These three top-level fields are mandatory and must appear once each.",
+    "requiredFields": "Required fields",
+    "nameTitle": "name",
+    "nameDesc": "Human-readable project title shown in the app.",
+    "rangeTitle": "range",
+    "rangeDesc": "Progress scale for leaf values. Minimum and maximum separated by ..",
+    "stagesTitle": "stages",
+    "stagesDesc": "Nested tree of stages. Branches are objects; leaves are numbers within range.",
+    "rulesTitle": "Rules of thumb",
+    "rule1": "Use spaces for indentation (two spaces per level is a good default).",
+    "rule2": "Only numeric leaves count toward progress; missing leaves are treated as the minimum of range.",
+    "rule3": "Child stages may be written as a map or as a YAML list with - item; lists are normalized automatically.",
+    "rule4": "Parent progress is the average of their children, rolled up through the tree.",
+    "rule5": "Lines starting with # are comments and are ignored.",
+    "rule6": "Do not repeat name, range, or stages at the top level.",
+    "startTitle": "Start from a file",
+    "startIntro": "Download a minimal template or the full house example, edit it locally, then load it back in CAW.",
+    "downloadTemplate": "Download template",
+    "downloadHouse": "Download house example",
+    "openHouse": "Open house example",
+    "backToLoader": "Back to loader"
+  }
+}

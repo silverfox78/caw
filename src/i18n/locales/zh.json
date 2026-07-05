@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "返回",
+    "home": "首页",
+    "loading": "加载中…",
+    "loadingExample": "正在加载示例…",
+    "origin": "来源",
+    "file": "文件",
+    "color": "颜色",
+    "mood": "状态",
+    "name": "名称",
+    "value": "数值",
+    "from": "最小",
+    "to": "最大"
+  },
+  "lang": {
+    "switchAria": "选择语言"
+  },
+  "mobile": {
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "loaderHint": "使用上方菜单选择文件、打开示例或查看格式指南。"
+  },
+  "home": {
+    "eyebrow": "现场笔记",
+    "tagline": "...今天进展如何？",
+    "cta": "看看进展如何"
+  },
+  "examples": {
+    "basic": {
+      "label": "基础示例",
+      "shortLabel": "基础",
+      "description": "房屋建造 — 深层阶段树，无权重"
+    },
+    "advanced": {
+      "label": "高级示例",
+      "shortLabel": "高级",
+      "description": "巴塔哥尼亚之旅 — 多层级可选权重"
+    },
+    "tryLabel": "或试试示例",
+    "open": "打开{{name}}示例",
+    "download": "下载{{name}}示例"
+  },
+  "loader": {
+    "eyebrow": "项目加载器",
+    "title": "选择 .yml 文件",
+    "hint": "选择本地 YAML 文件，或打开内置的基础/高级示例。",
+    "chooseFile": "选择文件",
+    "helpLink": "需要文件格式帮助？",
+    "unknownExample": "未知示例。",
+    "parseError": "无法解析 YAML 文件。",
+    "loadExampleError": "无法加载示例。",
+    "readFileError": "无法读取文件。",
+    "httpError": "无法加载示例（HTTP {{status}}）。"
+  },
+  "project": {
+    "context": "看看进展如何",
+    "changeFile": "更换文件",
+    "formatGuide": "格式指南",
+    "tabsAria": "项目视图"
+  },
+  "tabs": {
+    "state": "状态",
+    "source": "源码",
+    "edition": "编辑"
+  },
+  "state": {
+    "projectProgress": "项目进度",
+    "stage": "阶段",
+    "progress": "进度",
+    "missionStatus": "任务状态",
+    "globalProgress": "全局进度",
+    "share": "份额",
+    "done": "完成",
+    "total": "总计",
+    "shareTitle": "份额",
+    "progressTitle": "进度",
+    "participationTitle": "对项目总量的贡献",
+    "breakdown": "阶段明细",
+    "breakdownNamed": "{{name}} 明细",
+    "switchV2": "切换到任务面板（v2）",
+    "switchV1": "切换到经典摘要（v1）",
+    "treeHover": "将鼠标悬停在图表或表格中的阶段上以查看明细。",
+    "treeEmpty": "此阶段没有子阶段。",
+    "progressTooltip": "项目 {{cap}}% 中的 {{achieved}}%（阶段内完成 {{internal}}%）",
+    "progressTooltipSimple": "完成 {{internal}}%",
+    "chartAria": "项目阶段进度",
+    "noStagesChart": "无阶段"
+  },
+  "edition": {
+    "stages": "阶段",
+    "addItem": "添加项目",
+    "addSubItem": "添加子项目",
+    "expand": "展开",
+    "collapse": "折叠",
+    "remove": "删除 {{name}}",
+    "removeFallback": "阶段",
+    "stageName": "阶段名称",
+    "stageValue": "阶段数值",
+    "shareTitle": "同级份额",
+    "progressTitle": "阶段内进度",
+    "totalTitle": "对项目总量的贡献",
+    "noStages": "尚无阶段。添加一个项目开始。",
+    "noSubItems": "尚无子项目 — 使用 + 添加。",
+    "applyChanges": "应用更改",
+    "changesApplied": "更改已应用。",
+    "fixFields": "应用前请修正高亮字段。"
+  },
+  "yaml": {
+    "copy": "复制",
+    "copied": "已复制",
+    "download": "下载",
+    "sourceAria": "YAML 源码"
+  },
+  "validation": {
+    "eyebrow": "格式检查",
+    "title": "此文件需要稍作调整",
+    "parseSummary": "无法解析 YAML。请检查缩进、冒号和引号。",
+    "defaultSummary": "文件格式有问题。有效项目需要 `name`、`range` 和 `stages`。",
+    "fallbackIssue": "无法验证文件格式。",
+    "syntaxError": "YAML 语法错误：{{message}}",
+    "formatGuide": "格式指南",
+    "downloadTemplate": "下载模板"
+  },
+  "help": {
+    "eyebrow": "项目格式",
+    "title": "如何准备 .yml 文件",
+    "intro": "CAW 读取简单的 YAML 文档。以下三个顶级字段为必填，且各只能出现一次。",
+    "requiredFields": "必填字段",
+    "nameTitle": "name",
+    "nameDesc": "在应用中显示的可读项目标题。",
+    "rangeTitle": "range",
+    "rangeDesc": "叶节点值的进度刻度。最小值与最大值用 .. 分隔。",
+    "stagesTitle": "stages",
+    "stagesDesc": "嵌套的阶段树。分支为对象；叶节点为范围内的数字。",
+    "rulesTitle": "实用规则",
+    "rule1": "使用空格缩进（每级两个空格是不错的默认值）。",
+    "rule2": "只有数字叶节点计入进度；缺失的叶节点视为 range 的最小值。",
+    "rule3": "子阶段可写成映射或带 - item 的 YAML 列表；列表会自动规范化。",
+    "rule4": "父节点进度为子节点的平均值，沿树向上汇总。",
+    "rule5": "以 # 开头的行是注释，会被忽略。",
+    "rule6": "不要在顶级重复 name、range 或 stages。",
+    "startTitle": "从文件开始",
+    "startIntro": "下载最小模板或完整的房屋示例，在本地编辑后重新加载到 CAW。",
+    "downloadTemplate": "下载模板",
+    "downloadHouse": "下载房屋示例",
+    "openHouse": "打开房屋示例",
+    "backToLoader": "返回加载器"
+  }
+}

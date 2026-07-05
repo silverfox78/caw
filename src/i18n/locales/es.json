@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "Volver",
+    "home": "Inicio",
+    "loading": "Cargando…",
+    "loadingExample": "Cargando ejemplo…",
+    "origin": "Origen",
+    "file": "Archivo",
+    "color": "Color",
+    "mood": "Estado",
+    "name": "Nombre",
+    "value": "Valor",
+    "from": "Desde",
+    "to": "Hasta"
+  },
+  "lang": {
+    "switchAria": "Seleccionar idioma"
+  },
+  "mobile": {
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "loaderHint": "Usa el menú superior para elegir archivo, abrir un ejemplo o ver la guía de formato."
+  },
+  "home": {
+    "eyebrow": "Notas de campo",
+    "tagline": "...¿cómo vamos hoy?",
+    "cta": "Veamos cómo va"
+  },
+  "examples": {
+    "basic": {
+      "label": "Ejemplo básico",
+      "shortLabel": "Básico",
+      "description": "Casa en construcción — árbol profundo de etapas, sin pesos"
+    },
+    "advanced": {
+      "label": "Ejemplo avanzado",
+      "shortLabel": "Avanzado",
+      "description": "Viaje a la Patagonia — pesos opcionales en varios niveles"
+    },
+    "tryLabel": "O prueba un ejemplo",
+    "open": "Abrir ejemplo {{name}}",
+    "download": "Descargar ejemplo {{name}}"
+  },
+  "loader": {
+    "eyebrow": "Cargador de proyectos",
+    "title": "Elige un archivo .yml",
+    "hint": "Selecciona un archivo YAML local o abre un ejemplo integrado básico o avanzado.",
+    "chooseFile": "Elegir archivo",
+    "helpLink": "¿Necesitas ayuda con el formato del archivo?",
+    "unknownExample": "Ejemplo desconocido.",
+    "parseError": "No se pudo analizar el archivo YAML.",
+    "loadExampleError": "No se pudo cargar el ejemplo.",
+    "readFileError": "No se pudo leer el archivo.",
+    "httpError": "No se pudo cargar el ejemplo (HTTP {{status}})."
+  },
+  "project": {
+    "context": "Veamos cómo va",
+    "changeFile": "Cambiar archivo",
+    "formatGuide": "Guía de formato",
+    "tabsAria": "Vistas del proyecto"
+  },
+  "tabs": {
+    "state": "Estado",
+    "source": "Fuente",
+    "edition": "Edición"
+  },
+  "state": {
+    "projectProgress": "Progreso del proyecto",
+    "stage": "Etapa",
+    "progress": "Progreso",
+    "missionStatus": "Estado de la misión",
+    "globalProgress": "Progreso global",
+    "share": "Parte",
+    "done": "Hecho",
+    "total": "Total",
+    "shareTitle": "Parte",
+    "progressTitle": "Progreso",
+    "participationTitle": "Aporte al total del proyecto",
+    "breakdown": "Desglose de etapas",
+    "breakdownNamed": "Desglose de {{name}}",
+    "switchV2": "Cambiar al panel de misión (v2)",
+    "switchV1": "Cambiar al resumen clásico (v1)",
+    "treeHover": "Pasa el cursor sobre una etapa en el gráfico o la tabla para ver su desglose.",
+    "treeEmpty": "Esta etapa no tiene sub-etapas.",
+    "progressTooltip": "{{achieved}}% de {{cap}}% del proyecto ({{internal}}% completado en la etapa)",
+    "progressTooltipSimple": "{{internal}}% completado",
+    "chartAria": "Progreso de etapas del proyecto",
+    "noStagesChart": "Sin etapas"
+  },
+  "edition": {
+    "stages": "Etapas",
+    "addItem": "Agregar ítem",
+    "addSubItem": "Agregar sub-ítem",
+    "expand": "Expandir",
+    "collapse": "Contraer",
+    "remove": "Eliminar {{name}}",
+    "removeFallback": "etapa",
+    "stageName": "Nombre de etapa",
+    "stageValue": "Valor de etapa",
+    "shareTitle": "Parte entre hermanos",
+    "progressTitle": "Progreso dentro de la etapa",
+    "totalTitle": "Aporte al total del proyecto",
+    "noStages": "Sin etapas aún. Agrega un ítem para comenzar.",
+    "noSubItems": "Sin sub-ítems aún — usa + para agregar uno.",
+    "applyChanges": "Aplicar cambios",
+    "changesApplied": "Cambios aplicados.",
+    "fixFields": "Corrige los campos resaltados antes de aplicar."
+  },
+  "yaml": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "download": "Descargar",
+    "sourceAria": "Fuente YAML"
+  },
+  "validation": {
+    "eyebrow": "Revisión de formato",
+    "title": "Este archivo necesita un poco de trabajo",
+    "parseSummary": "No pudimos analizar el YAML. Revisa la indentación, los dos puntos y las comillas.",
+    "defaultSummary": "Hay un problema con el formato del archivo. Un proyecto válido necesita `name`, `range` y `stages`.",
+    "fallbackIssue": "No se pudo validar el formato del archivo.",
+    "syntaxError": "Error de sintaxis YAML: {{message}}",
+    "formatGuide": "Guía de formato",
+    "downloadTemplate": "Descargar plantilla"
+  },
+  "help": {
+    "eyebrow": "Formato del proyecto",
+    "title": "Cómo preparar tu archivo .yml",
+    "intro": "CAW lee un documento YAML simple. Estos tres campos de nivel superior son obligatorios y deben aparecer una sola vez cada uno.",
+    "requiredFields": "Campos obligatorios",
+    "nameTitle": "name",
+    "nameDesc": "Título legible del proyecto que se muestra en la app.",
+    "rangeTitle": "range",
+    "rangeDesc": "Escala de progreso para valores hoja. Mínimo y máximo separados por ..",
+    "stagesTitle": "stages",
+    "stagesDesc": "Árbol anidado de etapas. Las ramas son objetos; las hojas son números dentro del rango.",
+    "rulesTitle": "Reglas prácticas",
+    "rule1": "Usa espacios para la indentación (dos espacios por nivel es un buen valor por defecto).",
+    "rule2": "Solo las hojas numéricas cuentan para el progreso; las hojas faltantes se tratan como el mínimo de range.",
+    "rule3": "Las etapas hijas pueden escribirse como mapa o como lista YAML con - item; las listas se normalizan automáticamente.",
+    "rule4": "El progreso de un padre es el promedio de sus hijos, propagado por el árbol.",
+    "rule5": "Las líneas que empiezan con # son comentarios y se ignoran.",
+    "rule6": "No repitas name, range ni stages en el nivel superior.",
+    "startTitle": "Empezar desde un archivo",
+    "startIntro": "Descarga una plantilla mínima o el ejemplo completo de la casa, edítalo localmente y vuelve a cargarlo en CAW.",
+    "downloadTemplate": "Descargar plantilla",
+    "downloadHouse": "Descargar ejemplo casa",
+    "openHouse": "Abrir ejemplo casa",
+    "backToLoader": "Volver al cargador"
+  }
+}

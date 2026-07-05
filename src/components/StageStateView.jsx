@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import PieChart from './PieChart.jsx'
 import StateMissionBoard from './StateMissionBoard.jsx'
 import StateSummaryLegacy from './StateSummaryLegacy.jsx'
@@ -11,6 +12,7 @@ import {
 } from '../utils/stageAnalysis.js'
 
 function StageStateView({ parsed }) {
+  const { t } = useTranslation()
   const [hoveredKey, setHoveredKey] = useState(null)
   const [pinnedKey, setPinnedKey] = useState(null)
   const [useLegacySummary, setUseLegacySummary] = useState(false)
@@ -54,6 +56,8 @@ function StageStateView({ parsed }) {
                 pinnedKey={pinnedKey}
                 onSegmentHover={setHoveredKey}
                 onSegmentClick={togglePin}
+                chartLabel={t('state.chartAria')}
+                emptyLabel={t('state.noStagesChart')}
               />
             </div>
           </div>
@@ -87,7 +91,7 @@ function StageStateView({ parsed }) {
           type="button"
           className="state-view__version-toggle"
           onClick={() => setUseLegacySummary((current) => !current)}
-          title={useLegacySummary ? 'Switch to mission board (v2)' : 'Switch to classic summary (v1)'}
+          title={useLegacySummary ? t('state.switchV2') : t('state.switchV1')}
         >
           {useLegacySummary ? 'v2' : 'v1'}
         </button>
@@ -98,7 +102,7 @@ function StageStateView({ parsed }) {
       <section
         className="state-view__detail"
         aria-live="polite"
-        aria-label={activeStage ? `${activeStage.label} breakdown` : 'Stage breakdown'}
+        aria-label={activeStage ? t('state.breakdownNamed', { name: activeStage.label }) : t('state.breakdown')}
       >
         {activeStage ? (
           <header className="state-view__detail-header">

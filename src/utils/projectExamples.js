@@ -3,17 +3,11 @@ const BASE = import.meta.env.BASE_URL
 export const PROJECT_EXAMPLES = [
   {
     id: 'basic',
-    label: 'Basic example',
-    shortLabel: 'Basic',
-    description: 'House construction — deep stage tree, no weights',
     url: `${BASE}examples/house.yml`,
     fileName: 'house.yml',
   },
   {
     id: 'advanced',
-    label: 'Advanced example',
-    shortLabel: 'Advanced',
-    description: 'Patagonia trip — optional weights at several levels',
     url: `${BASE}examples/travel.yml`,
     fileName: 'travel.yml',
   },

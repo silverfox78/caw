@@ -4,11 +4,13 @@ function PieChart({
   pinnedKey,
   onSegmentHover,
   onSegmentClick,
+  chartLabel,
+  emptyLabel,
 }) {
   if (!segments.length) {
     return (
       <div className="pie-chart pie-chart--empty" aria-hidden="true">
-        No stages
+        {emptyLabel}
       </div>
     )
   }
@@ -22,7 +24,7 @@ function PieChart({
   const focusKey = pinnedKey ?? activeKey
 
   return (
-    <figure className="pie-chart" aria-label="Project stages progress">
+    <figure className="pie-chart" aria-label={chartLabel}>
       <svg viewBox={`0 0 ${size} ${size}`} className="pie-chart__svg" role="img">
         {segments.map((segment) => {
           const progressOuter =

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import ProgressShareLabel from './ProgressShareLabel.jsx'
 import { getDepthTone, getStageTreeMaxDepth } from '../utils/stageAnalysis.js'
 
@@ -42,18 +43,16 @@ function StageTreeNode({ node, depth, maxDepth, stageColor, parentShare }) {
 }
 
 function StageTreeView({ stage, stageColor }) {
+  const { t } = useTranslation()
+
   if (!stage) {
-    return (
-      <p className="stage-tree__placeholder">
-        Hover a stage in the chart or table to explore its breakdown.
-      </p>
-    )
+    return <p className="stage-tree__placeholder">{t('state.treeHover')}</p>
   }
 
   if (!stage.children.length) {
     return (
       <p className="stage-tree__placeholder stage-tree__placeholder--inline">
-        This stage has no sub-stages.
+        {t('state.treeEmpty')}
       </p>
     )
   }

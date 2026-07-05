@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { formatPercent } from '../utils/stageAnalysis.js'
 
 export function shouldShowShareContrast(share, progress, displayProgress) {
@@ -7,13 +8,18 @@ export function shouldShowShareContrast(share, progress, displayProgress) {
 }
 
 function ProgressShareLabel({ progress, share = 100, displayProgress, className = '', title }) {
+  const { t } = useTranslation()
   const cap = share ?? 100
   const internal = progress ?? 0
   const achieved = displayProgress ?? (internal * cap) / 100
   const showContrast = shouldShowShareContrast(cap, internal, achieved)
   const defaultTitle = showContrast
-    ? `${formatPercent(achieved)}% of ${formatPercent(cap)}% project share (${formatPercent(internal)}% complete within stage)`
-    : `${formatPercent(internal)}% complete`
+    ? t('state.progressTooltip', {
+        achieved: formatPercent(achieved),
+        cap: formatPercent(cap),
+        internal: formatPercent(internal),
+      })
+    : t('state.progressTooltipSimple', { internal: formatPercent(internal) })
 
   return (
     <span className={`progress-share${className ? ` ${className}` : ''}`} title={title ?? defaultTitle}>

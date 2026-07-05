@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "Retour",
+    "home": "Accueil",
+    "loading": "Chargement…",
+    "loadingExample": "Chargement de l'exemple…",
+    "origin": "Origine",
+    "file": "Fichier",
+    "color": "Couleur",
+    "mood": "Humeur",
+    "name": "Nom",
+    "value": "Valeur",
+    "from": "De",
+    "to": "À"
+  },
+  "lang": {
+    "switchAria": "Choisir la langue"
+  },
+  "mobile": {
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "loaderHint": "Utilisez le menu ci-dessus pour choisir un fichier, ouvrir un exemple ou consulter le guide de format."
+  },
+  "home": {
+    "eyebrow": "Notes de terrain",
+    "tagline": "...où en sommes-nous aujourd'hui ?",
+    "cta": "Voyons où nous en sommes"
+  },
+  "examples": {
+    "basic": {
+      "label": "Exemple basique",
+      "shortLabel": "Basique",
+      "description": "Maison en construction — arbre d'étapes profond, sans poids"
+    },
+    "advanced": {
+      "label": "Exemple avancé",
+      "shortLabel": "Avancé",
+      "description": "Voyage en Patagonie — poids optionnels à plusieurs niveaux"
+    },
+    "tryLabel": "Ou essayez un exemple",
+    "open": "Ouvrir l'exemple {{name}}",
+    "download": "Télécharger l'exemple {{name}}"
+  },
+  "loader": {
+    "eyebrow": "Chargeur de projet",
+    "title": "Choisir un fichier .yml",
+    "hint": "Sélectionnez un fichier YAML local ou ouvrez un exemple intégré basique ou avancé.",
+    "chooseFile": "Choisir un fichier",
+    "helpLink": "Besoin d'aide sur le format du fichier ?",
+    "unknownExample": "Exemple inconnu.",
+    "parseError": "Impossible d'analyser le fichier YAML.",
+    "loadExampleError": "Impossible de charger l'exemple.",
+    "readFileError": "Impossible de lire le fichier.",
+    "httpError": "Impossible de charger l'exemple (HTTP {{status}})."
+  },
+  "project": {
+    "context": "Voyons où nous en sommes",
+    "changeFile": "Changer de fichier",
+    "formatGuide": "Guide de format",
+    "tabsAria": "Vues du projet"
+  },
+  "tabs": {
+    "state": "État",
+    "source": "Source",
+    "edition": "Édition"
+  },
+  "state": {
+    "projectProgress": "Progression du projet",
+    "stage": "Étape",
+    "progress": "Progression",
+    "missionStatus": "État de la mission",
+    "globalProgress": "Progression globale",
+    "share": "Part",
+    "done": "Fait",
+    "total": "Total",
+    "shareTitle": "Part",
+    "progressTitle": "Progression",
+    "participationTitle": "Contribution au total du projet",
+    "breakdown": "Détail des étapes",
+    "breakdownNamed": "Détail de {{name}}",
+    "switchV2": "Passer au tableau de mission (v2)",
+    "switchV1": "Passer au résumé classique (v1)",
+    "treeHover": "Survolez une étape dans le graphique ou le tableau pour explorer son détail.",
+    "treeEmpty": "Cette étape n'a pas de sous-étapes.",
+    "progressTooltip": "{{achieved}}% sur {{cap}}% du projet ({{internal}}% terminé dans l'étape)",
+    "progressTooltipSimple": "{{internal}}% terminé",
+    "chartAria": "Progression des étapes du projet",
+    "noStagesChart": "Aucune étape"
+  },
+  "edition": {
+    "stages": "Étapes",
+    "addItem": "Ajouter un élément",
+    "addSubItem": "Ajouter un sous-élément",
+    "expand": "Développer",
+    "collapse": "Réduire",
+    "remove": "Supprimer {{name}}",
+    "removeFallback": "étape",
+    "stageName": "Nom de l'étape",
+    "stageValue": "Valeur de l'étape",
+    "shareTitle": "Part entre frères",
+    "progressTitle": "Progression dans l'étape",
+    "totalTitle": "Contribution au total du projet",
+    "noStages": "Pas encore d'étapes. Ajoutez un élément pour commencer.",
+    "noSubItems": "Pas encore de sous-éléments — utilisez + pour en ajouter un.",
+    "applyChanges": "Appliquer les modifications",
+    "changesApplied": "Modifications appliquées.",
+    "fixFields": "Corrigez les champs en surbrillance avant d'appliquer."
+  },
+  "yaml": {
+    "copy": "Copier",
+    "copied": "Copié",
+    "download": "Télécharger",
+    "sourceAria": "Source YAML"
+  },
+  "validation": {
+    "eyebrow": "Vérification du format",
+    "title": "Ce fichier a besoin d'un peu de travail",
+    "parseSummary": "Impossible d'analyser le YAML. Vérifiez l'indentation, les deux-points et les guillemets.",
+    "defaultSummary": "Il y a un problème avec le format du fichier. Un projet valide nécessite `name`, `range` et `stages`.",
+    "fallbackIssue": "Le format du fichier n'a pas pu être validé.",
+    "syntaxError": "Erreur de syntaxe YAML : {{message}}",
+    "formatGuide": "Guide de format",
+    "downloadTemplate": "Télécharger le modèle"
+  },
+  "help": {
+    "eyebrow": "Format du projet",
+    "title": "Comment préparer votre fichier .yml",
+    "intro": "CAW lit un document YAML simple. Ces trois champs de niveau supérieur sont obligatoires et doivent apparaître une fois chacun.",
+    "requiredFields": "Champs obligatoires",
+    "nameTitle": "name",
+    "nameDesc": "Titre lisible du projet affiché dans l'application.",
+    "rangeTitle": "range",
+    "rangeDesc": "Échelle de progression pour les valeurs feuilles. Minimum et maximum séparés par ..",
+    "stagesTitle": "stages",
+    "stagesDesc": "Arbre imbriqué d'étapes. Les branches sont des objets ; les feuilles sont des nombres dans l'intervalle.",
+    "rulesTitle": "Règles pratiques",
+    "rule1": "Utilisez des espaces pour l'indentation (deux espaces par niveau est une bonne valeur par défaut).",
+    "rule2": "Seules les feuilles numériques comptent pour la progression ; les feuilles manquantes sont traitées comme le minimum de range.",
+    "rule3": "Les étapes enfants peuvent être écrites comme une carte ou une liste YAML avec - item ; les listes sont normalisées automatiquement.",
+    "rule4": "La progression d'un parent est la moyenne de ses enfants, remontée dans l'arbre.",
+    "rule5": "Les lignes commençant par # sont des commentaires et sont ignorées.",
+    "rule6": "Ne répétez pas name, range ou stages au niveau supérieur.",
+    "startTitle": "Commencer à partir d'un fichier",
+    "startIntro": "Téléchargez un modèle minimal ou l'exemple complet de la maison, modifiez-le localement, puis rechargez-le dans CAW.",
+    "downloadTemplate": "Télécharger le modèle",
+    "downloadHouse": "Télécharger l'exemple maison",
+    "openHouse": "Ouvrir l'exemple maison",
+    "backToLoader": "Retour au chargeur"
+  }
+}

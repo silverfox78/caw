@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "Zurück",
+    "home": "Start",
+    "loading": "Laden…",
+    "loadingExample": "Beispiel wird geladen…",
+    "origin": "Herkunft",
+    "file": "Datei",
+    "color": "Farbe",
+    "mood": "Stimmung",
+    "name": "Name",
+    "value": "Wert",
+    "from": "Von",
+    "to": "Bis"
+  },
+  "lang": {
+    "switchAria": "Sprache wählen"
+  },
+  "mobile": {
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "loaderHint": "Nutze das Menü oben, um eine Datei zu wählen, ein Beispiel zu öffnen oder den Format-Leitfaden zu lesen."
+  },
+  "home": {
+    "eyebrow": "Feldbuch",
+    "tagline": "...wie stehen wir heute da?",
+    "cta": "Schauen wir, wie es läuft"
+  },
+  "examples": {
+    "basic": {
+      "label": "Einfaches Beispiel",
+      "shortLabel": "Einfach",
+      "description": "Hausbau — tiefer Phasenbaum, ohne Gewichte"
+    },
+    "advanced": {
+      "label": "Erweitertes Beispiel",
+      "shortLabel": "Erweitert",
+      "description": "Patagonien-Reise — optionale Gewichte auf mehreren Ebenen"
+    },
+    "tryLabel": "Oder ein Beispiel ausprobieren",
+    "open": "{{name}}-Beispiel öffnen",
+    "download": "{{name}}-Beispiel herunterladen"
+  },
+  "loader": {
+    "eyebrow": "Projekt-Lader",
+    "title": "Wähle eine .yml-Datei",
+    "hint": "Wähle eine lokale YAML-Datei oder öffne ein eingebautes einfaches oder erweitertes Beispiel.",
+    "chooseFile": "Datei wählen",
+    "helpLink": "Hilfe zum Dateiformat benötigt?",
+    "unknownExample": "Unbekanntes Beispiel.",
+    "parseError": "Die YAML-Datei konnte nicht analysiert werden.",
+    "loadExampleError": "Das Beispiel konnte nicht geladen werden.",
+    "readFileError": "Die Datei konnte nicht gelesen werden.",
+    "httpError": "Das Beispiel konnte nicht geladen werden (HTTP {{status}})."
+  },
+  "project": {
+    "context": "Schauen wir, wie es läuft",
+    "changeFile": "Datei wechseln",
+    "formatGuide": "Format-Leitfaden",
+    "tabsAria": "Projektansichten"
+  },
+  "tabs": {
+    "state": "Status",
+    "source": "Quelle",
+    "edition": "Bearbeitung"
+  },
+  "state": {
+    "projectProgress": "Projektfortschritt",
+    "stage": "Phase",
+    "progress": "Fortschritt",
+    "missionStatus": "Missionsstatus",
+    "globalProgress": "Gesamtfortschritt",
+    "share": "Anteil",
+    "done": "Erledigt",
+    "total": "Gesamt",
+    "shareTitle": "Anteil",
+    "progressTitle": "Fortschritt",
+    "participationTitle": "Beitrag zum Gesamtprojekt",
+    "breakdown": "Phasenaufschlüsselung",
+    "breakdownNamed": "Aufschlüsselung von {{name}}",
+    "switchV2": "Zum Missionsboard wechseln (v2)",
+    "switchV1": "Zur klassischen Übersicht wechseln (v1)",
+    "treeHover": "Bewege die Maus über eine Phase im Diagramm oder in der Tabelle, um die Aufschlüsselung zu sehen.",
+    "treeEmpty": "Diese Phase hat keine Unterphasen.",
+    "progressTooltip": "{{achieved}}% von {{cap}}% Projektanteil ({{internal}}% in der Phase abgeschlossen)",
+    "progressTooltipSimple": "{{internal}}% abgeschlossen",
+    "chartAria": "Fortschritt der Projektphasen",
+    "noStagesChart": "Keine Phasen"
+  },
+  "edition": {
+    "stages": "Phasen",
+    "addItem": "Element hinzufügen",
+    "addSubItem": "Unterelement hinzufügen",
+    "expand": "Aufklappen",
+    "collapse": "Zuklappen",
+    "remove": "{{name}} entfernen",
+    "removeFallback": "Phase",
+    "stageName": "Phasenname",
+    "stageValue": "Phasenwert",
+    "shareTitle": "Anteil unter Geschwistern",
+    "progressTitle": "Fortschritt innerhalb der Phase",
+    "totalTitle": "Beitrag zum Gesamtprojekt",
+    "noStages": "Noch keine Phasen. Füge ein Element hinzu, um zu beginnen.",
+    "noSubItems": "Noch keine Unterelemente — nutze +, um eines hinzuzufügen.",
+    "applyChanges": "Änderungen übernehmen",
+    "changesApplied": "Änderungen übernommen.",
+    "fixFields": "Korrigiere die markierten Felder vor dem Übernehmen."
+  },
+  "yaml": {
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "download": "Herunterladen",
+    "sourceAria": "YAML-Quelle"
+  },
+  "validation": {
+    "eyebrow": "Formatprüfung",
+    "title": "Diese Datei braucht etwas Arbeit",
+    "parseSummary": "YAML konnte nicht analysiert werden. Prüfe Einrückung, Doppelpunkte und Anführungszeichen.",
+    "defaultSummary": "Es gibt ein Problem mit dem Dateiformat. Ein gültiges Projekt benötigt `name`, `range` und `stages`.",
+    "fallbackIssue": "Das Dateiformat konnte nicht validiert werden.",
+    "syntaxError": "YAML-Syntaxfehler: {{message}}",
+    "formatGuide": "Format-Leitfaden",
+    "downloadTemplate": "Vorlage herunterladen"
+  },
+  "help": {
+    "eyebrow": "Projektformat",
+    "title": "So bereitest du deine .yml-Datei vor",
+    "intro": "CAW liest ein einfaches YAML-Dokument. Diese drei Felder auf oberster Ebene sind Pflicht und dürfen jeweils nur einmal vorkommen.",
+    "requiredFields": "Pflichtfelder",
+    "nameTitle": "name",
+    "nameDesc": "Lesbarer Projekttitel, der in der App angezeigt wird.",
+    "rangeTitle": "range",
+    "rangeDesc": "Fortschrittsskala für Blattwerte. Minimum und Maximum getrennt durch ..",
+    "stagesTitle": "stages",
+    "stagesDesc": "Verschachtelter Phasenbaum. Äste sind Objekte; Blätter sind Zahlen im Bereich.",
+    "rulesTitle": "Faustregeln",
+    "rule1": "Verwende Leerzeichen für die Einrückung (zwei Leerzeichen pro Ebene ist ein guter Standard).",
+    "rule2": "Nur numerische Blätter zählen für den Fortschritt; fehlende Blätter werden als Minimum von range behandelt.",
+    "rule3": "Kinderphasen können als Map oder als YAML-Liste mit - item geschrieben werden; Listen werden automatisch normalisiert.",
+    "rule4": "Der Fortschritt eines Elternknotens ist der Durchschnitt seiner Kinder, aufwärts im Baum fortgesetzt.",
+    "rule5": "Zeilen, die mit # beginnen, sind Kommentare und werden ignoriert.",
+    "rule6": "Wiederhole name, range oder stages nicht auf oberster Ebene.",
+    "startTitle": "Mit einer Datei starten",
+    "startIntro": "Lade eine minimale Vorlage oder das vollständige Haus-Beispiel herunter, bearbeite es lokal und lade es wieder in CAW.",
+    "downloadTemplate": "Vorlage herunterladen",
+    "downloadHouse": "Haus-Beispiel herunterladen",
+    "openHouse": "Haus-Beispiel öffnen",
+    "backToLoader": "Zurück zum Lader"
+  }
+}

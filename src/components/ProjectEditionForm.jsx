@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import StageEditor from './StageEditor.jsx'
 import {
   buildDocumentFromForm,
@@ -7,6 +8,7 @@ import {
 } from '../utils/stageEditTree.js'
 
 function ProjectEditionForm({ document, resetKey, onApply }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [rangeMin, setRangeMin] = useState(0)
   const [rangeMax, setRangeMax] = useState(5)
@@ -34,14 +36,14 @@ function ProjectEditionForm({ document, resetKey, onApply }) {
 
     if (!validation.valid) {
       setFormMessageKind('error')
-      setFormMessage(validation.messages[0] ?? 'Fix the highlighted fields before applying.')
+      setFormMessage(validation.messages[0] ?? t('edition.fixFields'))
       return
     }
 
     const nextDoc = buildDocumentFromForm({ name, rangeMin, rangeMax, stageNodes })
     onApply(nextDoc)
     setFormMessageKind('success')
-    setFormMessage('Changes applied.')
+    setFormMessage(t('edition.changesApplied'))
     setFieldErrors({})
   }
 
@@ -50,7 +52,7 @@ function ProjectEditionForm({ document, resetKey, onApply }) {
       <div className="edition-form__fields">
         <div className="edition-form__top-row">
           <label className="edition-field edition-field--name">
-            <span className="stage-editor__title">Name</span>
+            <span className="stage-editor__title">{t('common.name')}</span>
             <input
               type="text"
               className={`edition-input${fieldErrors.name ? ' edition-input--invalid' : ''}`}
@@ -68,41 +70,41 @@ function ProjectEditionForm({ document, resetKey, onApply }) {
 
           <div className="edition-form__range-group">
             <label className="edition-field edition-field--range">
-              <span className="stage-editor__title">From</span>
-            <input
-              type="number"
-              className={`edition-input edition-input--number${fieldErrors.rangeMin ? ' edition-input--invalid' : ''}`}
-              value={rangeMin}
-              min={0}
-              step={1}
-              onChange={(event) => setRangeMin(event.target.value)}
-              aria-invalid={Boolean(fieldErrors.rangeMin)}
-              aria-describedby={fieldErrors.rangeMin ? 'edition-range-min-error' : undefined}
-            />
-            {fieldErrors.rangeMin ? (
-              <span className="edition-field__error" id="edition-range-min-error">
-                {fieldErrors.rangeMin}
-              </span>
-            ) : null}
+              <span className="stage-editor__title">{t('common.from')}</span>
+              <input
+                type="number"
+                className={`edition-input edition-input--number${fieldErrors.rangeMin ? ' edition-input--invalid' : ''}`}
+                value={rangeMin}
+                min={0}
+                step={1}
+                onChange={(event) => setRangeMin(event.target.value)}
+                aria-invalid={Boolean(fieldErrors.rangeMin)}
+                aria-describedby={fieldErrors.rangeMin ? 'edition-range-min-error' : undefined}
+              />
+              {fieldErrors.rangeMin ? (
+                <span className="edition-field__error" id="edition-range-min-error">
+                  {fieldErrors.rangeMin}
+                </span>
+              ) : null}
             </label>
 
             <label className="edition-field edition-field--range">
-              <span className="stage-editor__title">To</span>
-            <input
-              type="number"
-              className={`edition-input edition-input--number${fieldErrors.rangeMax ? ' edition-input--invalid' : ''}`}
-              value={rangeMax}
-              min={1}
-              step={1}
-              onChange={(event) => setRangeMax(event.target.value)}
-              aria-invalid={Boolean(fieldErrors.rangeMax)}
-              aria-describedby={fieldErrors.rangeMax ? 'edition-range-max-error' : undefined}
-            />
-            {fieldErrors.rangeMax ? (
-              <span className="edition-field__error" id="edition-range-max-error">
-                {fieldErrors.rangeMax}
-              </span>
-            ) : null}
+              <span className="stage-editor__title">{t('common.to')}</span>
+              <input
+                type="number"
+                className={`edition-input edition-input--number${fieldErrors.rangeMax ? ' edition-input--invalid' : ''}`}
+                value={rangeMax}
+                min={1}
+                step={1}
+                onChange={(event) => setRangeMax(event.target.value)}
+                aria-invalid={Boolean(fieldErrors.rangeMax)}
+                aria-describedby={fieldErrors.rangeMax ? 'edition-range-max-error' : undefined}
+              />
+              {fieldErrors.rangeMax ? (
+                <span className="edition-field__error" id="edition-range-max-error">
+                  {fieldErrors.rangeMax}
+                </span>
+              ) : null}
             </label>
           </div>
         </div>
@@ -130,7 +132,7 @@ function ProjectEditionForm({ document, resetKey, onApply }) {
           </p>
         ) : null}
         <button type="submit" className="btn btn-primary btn--compact">
-          Apply changes
+          {t('edition.applyChanges')}
         </button>
       </div>
     </form>

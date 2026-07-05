@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { PROJECT_EXAMPLES } from '../utils/projectExamples.js'
 
 function ExampleLoadButtons({ onLoad, loading, variant = 'default', compact = false }) {
+  const { t } = useTranslation()
   const btnClass = compact ? 'btn btn-secondary btn--compact' : 'btn btn-secondary load-prompt__btn'
 
   return (
     <div className={`example-load-buttons${variant === 'toolbar' ? ' example-load-buttons--toolbar' : ''}`}>
       {variant === 'default' ? (
-        <p className="example-load-buttons__label">Or try an example</p>
+        <p className="example-load-buttons__label">{t('examples.tryLabel')}</p>
       ) : null}
       <div className="example-load-buttons__group">
         {PROJECT_EXAMPLES.map((example) => (
@@ -17,9 +19,9 @@ function ExampleLoadButtons({ onLoad, loading, variant = 'default', compact = fa
             className={btnClass}
             onClick={() => onLoad(example.id)}
             disabled={loading}
-            title={example.description}
+            title={t(`examples.${example.id}.description`)}
           >
-            {loading ? 'Loading…' : example.shortLabel}
+            {loading ? t('common.loading') : t(`examples.${example.id}.shortLabel`)}
           </button>
         ))}
       </div>
@@ -28,6 +30,7 @@ function ExampleLoadButtons({ onLoad, loading, variant = 'default', compact = fa
 }
 
 export function ExampleOpenLinks({ compact = false }) {
+  const { t } = useTranslation()
   const btnClass = compact ? 'btn btn-secondary btn--compact' : 'btn btn-secondary'
 
   return (
@@ -37,9 +40,9 @@ export function ExampleOpenLinks({ compact = false }) {
           key={example.id}
           to={`/lets-see?example=${example.id}`}
           className={btnClass}
-          title={example.description}
+          title={t(`examples.${example.id}.description`)}
         >
-          Open {example.shortLabel.toLowerCase()} example
+          {t('examples.open', { name: t(`examples.${example.id}.shortLabel`).toLowerCase() })}
         </Link>
       ))}
     </div>
@@ -47,6 +50,7 @@ export function ExampleOpenLinks({ compact = false }) {
 }
 
 export function ExampleDownloadLinks({ compact = false }) {
+  const { t } = useTranslation()
   const btnClass = compact ? 'btn btn-secondary btn--compact' : 'btn btn-secondary'
 
   return (
@@ -57,9 +61,9 @@ export function ExampleDownloadLinks({ compact = false }) {
           href={example.url}
           download={example.fileName}
           className={btnClass}
-          title={example.description}
+          title={t(`examples.${example.id}.description`)}
         >
-          Download {example.shortLabel.toLowerCase()} example
+          {t('examples.download', { name: t(`examples.${example.id}.shortLabel`).toLowerCase() })}
         </a>
       ))}
     </>

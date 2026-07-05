@@ -1,0 +1,150 @@
+{
+  "common": {
+    "back": "Voltar",
+    "home": "Início",
+    "loading": "A carregar…",
+    "loadingExample": "A carregar exemplo…",
+    "origin": "Origem",
+    "file": "Ficheiro",
+    "color": "Cor",
+    "mood": "Estado",
+    "name": "Nome",
+    "value": "Valor",
+    "from": "De",
+    "to": "Até"
+  },
+  "lang": {
+    "switchAria": "Selecionar idioma"
+  },
+  "mobile": {
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "loaderHint": "Use o menu acima para escolher ficheiro, abrir um exemplo ou ver o guia de formato."
+  },
+  "home": {
+    "eyebrow": "Notas de campo",
+    "tagline": "...como estamos hoje?",
+    "cta": "Vamos ver como vai"
+  },
+  "examples": {
+    "basic": {
+      "label": "Exemplo básico",
+      "shortLabel": "Básico",
+      "description": "Casa em construção — árvore profunda de etapas, sem pesos"
+    },
+    "advanced": {
+      "label": "Exemplo avançado",
+      "shortLabel": "Avançado",
+      "description": "Viagem à Patagónia — pesos opcionais em vários níveis"
+    },
+    "tryLabel": "Ou experimente um exemplo",
+    "open": "Abrir exemplo {{name}}",
+    "download": "Descarregar exemplo {{name}}"
+  },
+  "loader": {
+    "eyebrow": "Carregador de projetos",
+    "title": "Escolha um ficheiro .yml",
+    "hint": "Selecione um ficheiro YAML local ou abra um exemplo integrado básico ou avançado.",
+    "chooseFile": "Escolher ficheiro",
+    "helpLink": "Precisa de ajuda com o formato do ficheiro?",
+    "unknownExample": "Exemplo desconhecido.",
+    "parseError": "Não foi possível analisar o ficheiro YAML.",
+    "loadExampleError": "Não foi possível carregar o exemplo.",
+    "readFileError": "Não foi possível ler o ficheiro.",
+    "httpError": "Não foi possível carregar o exemplo (HTTP {{status}})."
+  },
+  "project": {
+    "context": "Vamos ver como vai",
+    "changeFile": "Mudar ficheiro",
+    "formatGuide": "Guia de formato",
+    "tabsAria": "Vistas do projeto"
+  },
+  "tabs": {
+    "state": "Estado",
+    "source": "Fonte",
+    "edition": "Edição"
+  },
+  "state": {
+    "projectProgress": "Progresso do projeto",
+    "stage": "Etapa",
+    "progress": "Progresso",
+    "missionStatus": "Estado da missão",
+    "globalProgress": "Progresso global",
+    "share": "Parte",
+    "done": "Feito",
+    "total": "Total",
+    "shareTitle": "Parte",
+    "progressTitle": "Progresso",
+    "participationTitle": "Contribuição para o total do projeto",
+    "breakdown": "Detalhe das etapas",
+    "breakdownNamed": "Detalhe de {{name}}",
+    "switchV2": "Mudar para o painel de missão (v2)",
+    "switchV1": "Mudar para o resumo clássico (v1)",
+    "treeHover": "Passe o rato sobre uma etapa no gráfico ou na tabela para ver o detalhe.",
+    "treeEmpty": "Esta etapa não tem sub-etapas.",
+    "progressTooltip": "{{achieved}}% de {{cap}}% do projeto ({{internal}}% concluído na etapa)",
+    "progressTooltipSimple": "{{internal}}% concluído",
+    "chartAria": "Progresso das etapas do projeto",
+    "noStagesChart": "Sem etapas"
+  },
+  "edition": {
+    "stages": "Etapas",
+    "addItem": "Adicionar item",
+    "addSubItem": "Adicionar sub-item",
+    "expand": "Expandir",
+    "collapse": "Recolher",
+    "remove": "Remover {{name}}",
+    "removeFallback": "etapa",
+    "stageName": "Nome da etapa",
+    "stageValue": "Valor da etapa",
+    "shareTitle": "Parte entre irmãos",
+    "progressTitle": "Progresso dentro da etapa",
+    "totalTitle": "Contribuição para o total do projeto",
+    "noStages": "Sem etapas ainda. Adicione um item para começar.",
+    "noSubItems": "Sem sub-itens ainda — use + para adicionar um.",
+    "applyChanges": "Aplicar alterações",
+    "changesApplied": "Alterações aplicadas.",
+    "fixFields": "Corrija os campos destacados antes de aplicar."
+  },
+  "yaml": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "download": "Descarregar",
+    "sourceAria": "Fonte YAML"
+  },
+  "validation": {
+    "eyebrow": "Verificação de formato",
+    "title": "Este ficheiro precisa de algum trabalho",
+    "parseSummary": "Não foi possível analisar o YAML. Verifique a indentação, os dois pontos e as aspas.",
+    "defaultSummary": "Há um problema com o formato do ficheiro. Um projeto válido precisa de `name`, `range` e `stages`.",
+    "fallbackIssue": "Não foi possível validar o formato do ficheiro.",
+    "syntaxError": "Erro de sintaxe YAML: {{message}}",
+    "formatGuide": "Guia de formato",
+    "downloadTemplate": "Descarregar modelo"
+  },
+  "help": {
+    "eyebrow": "Formato do projeto",
+    "title": "Como preparar o seu ficheiro .yml",
+    "intro": "O CAW lê um documento YAML simples. Estes três campos de nível superior são obrigatórios e devem aparecer uma vez cada.",
+    "requiredFields": "Campos obrigatórios",
+    "nameTitle": "name",
+    "nameDesc": "Título legível do projeto mostrado na aplicação.",
+    "rangeTitle": "range",
+    "rangeDesc": "Escala de progresso para valores folha. Mínimo e máximo separados por ..",
+    "stagesTitle": "stages",
+    "stagesDesc": "Árvore aninhada de etapas. Ramos são objetos; folhas são números dentro do intervalo.",
+    "rulesTitle": "Regras práticas",
+    "rule1": "Use espaços para indentação (dois espaços por nível é um bom padrão).",
+    "rule2": "Apenas folhas numéricas contam para o progresso; folhas em falta são tratadas como o mínimo de range.",
+    "rule3": "Etapas filhas podem ser escritas como mapa ou como lista YAML com - item; as listas são normalizadas automaticamente.",
+    "rule4": "O progresso de um pai é a média dos filhos, propagado pela árvore.",
+    "rule5": "Linhas que começam com # são comentários e são ignoradas.",
+    "rule6": "Não repita name, range ou stages no nível superior.",
+    "startTitle": "Começar a partir de um ficheiro",
+    "startIntro": "Descarregue um modelo mínimo ou o exemplo completo da casa, edite localmente e volte a carregar no CAW.",
+    "downloadTemplate": "Descarregar modelo",
+    "downloadHouse": "Descarregar exemplo casa",
+    "openHouse": "Abrir exemplo casa",
+    "backToLoader": "Voltar ao carregador"
+  }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import OverallProgressHero from './OverallProgressHero.jsx'
 import ProgressShareLabel from './ProgressShareLabel.jsx'
 
@@ -10,9 +11,11 @@ function StateSummaryLegacy({
   onHover,
   onPin,
 }) {
+  const { t } = useTranslation()
+
   return (
     <>
-      <p className="state-view__overall-label">Project progress</p>
+      <p className="state-view__overall-label">{t('state.projectProgress')}</p>
       <OverallProgressHero
         overall={overall}
         segmentColors={segments.map((segment) => segment.color)}
@@ -21,8 +24,8 @@ function StateSummaryLegacy({
       <table className="state-view__table">
         <thead>
           <tr>
-            <th scope="col">Stage</th>
-            <th scope="col">Progress</th>
+            <th scope="col">{t('state.stage')}</th>
+            <th scope="col">{t('state.progress')}</th>
           </tr>
         </thead>
         <tbody>

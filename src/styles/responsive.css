@@ -1,0 +1,198 @@
+/* Mobile-first responsive enhancements */
+
+@media (max-width: 768px) {
+  .app-shell {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .page--workspace {
+    min-height: 100dvh;
+    max-height: none;
+    overflow: visible;
+    align-items: flex-start;
+    padding-block: calc(var(--page-padding) + 0.25rem);
+  }
+
+  .page__inner--wide {
+    width: 100%;
+    max-width: none;
+    min-height: min(100dvh, 100%);
+  }
+
+  .page__panel--wide {
+    max-height: none;
+    overflow: visible;
+    min-height: min(85dvh, 100%);
+  }
+
+  .project-view {
+    overflow: visible;
+    min-height: 0;
+  }
+
+  .project-view__content {
+    overflow: visible;
+    min-height: 12rem;
+  }
+
+  .state-view {
+    overflow: visible;
+    min-height: auto;
+  }
+
+  .state-view__detail {
+    min-height: 8rem;
+    max-height: none;
+    padding-inline: var(--space-sm);
+  }
+
+  .state-view__detail-scroll {
+    max-height: 40vh;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-view__examples {
+    flex-direction: row;
+  }
+
+  .actions .btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .btn {
+    min-width: 0;
+  }
+
+  .project-view__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .project-view__toolbar > .btn,
+  .project-view__toolbar > a.btn {
+    width: 100%;
+  }
+
+  .example-load-buttons--toolbar {
+    width: 100%;
+  }
+
+  .example-load-buttons--toolbar .example-load-buttons__group {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .example-load-buttons--toolbar .example-load-buttons__group .btn {
+    width: 100%;
+  }
+
+  .project-tabs {
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .project-tabs__tab {
+    flex: 1 1 auto;
+    min-width: 4.5rem;
+    padding-inline: 0.65rem;
+    font-size: 0.62rem;
+  }
+
+  .load-prompt {
+    min-height: auto;
+    padding-block: var(--space-lg);
+  }
+
+  .load-prompt__dropzone {
+    max-width: none;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .load-prompt__actions {
+    flex-direction: column;
+  }
+
+  .example-load-buttons__group {
+    flex-direction: column;
+  }
+
+  .page-header__title {
+    font-size: clamp(2.5rem, 14vw, 4rem);
+  }
+
+  .help-view {
+    padding-inline: 0;
+  }
+
+  .help-view__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .help-view__actions .btn {
+    width: 100%;
+  }
+
+  .validation-alert__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .validation-alert__actions .btn,
+  .validation-alert__actions a {
+    width: 100%;
+  }
+
+  .edition-form__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .edition-form__footer .btn {
+    width: 100%;
+  }
+
+  .yaml-viewer-shell {
+    min-height: 12rem;
+  }
+}
+
+@media (max-width: 640px) and (min-width: 481px) {
+  /* tablet tweaks handled in mobile-header.css */
+}
+
+@media (max-width: 480px) {
+  .state-view__grid--mission .state-view__chart {
+    max-width: min(12rem, 55vw);
+    margin-inline: auto;
+  }
+
+  .state-view__chart-square {
+    max-width: min(12rem, 55vw);
+    margin-inline: auto;
+  }
+
+  .pie-chart {
+    width: min(200px, 70vw);
+  }
+
+  .state-view__version-toggle {
+    right: 0.35rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .page__inner--wide {
+    width: 94%;
+  }
+
+  .project-view__toolbar {
+    gap: 0.4rem;
+  }
+}

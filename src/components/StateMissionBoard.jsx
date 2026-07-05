@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { formatPercent } from '../utils/stageAnalysis.js'
 import { getProgressEmoji } from '../utils/stageProgressMood.js'
 
@@ -29,6 +30,7 @@ function MissionRow({
   onMouseLeave,
   onClick,
 }) {
+  const { t } = useTranslation()
   const share = root.share ?? 100
   const progress = root.progress ?? 0
   const participation = root.displayProgress ?? progress
@@ -69,18 +71,18 @@ function MissionRow({
         <MissionProgressBar value={progress} color={color} />
       </span>
 
-      <span className="state-mission__cell state-mission__cell--metric" role="cell" title="Share">
+      <span className="state-mission__cell state-mission__cell--metric" role="cell" title={t('state.shareTitle')}>
         {formatPercent(share)}%
       </span>
 
-      <span className="state-mission__cell state-mission__cell--metric" role="cell" title="Progress">
+      <span className="state-mission__cell state-mission__cell--metric" role="cell" title={t('state.progressTitle')}>
         {formatPercent(progress)}%
       </span>
 
       <span
         className="state-mission__cell state-mission__cell--metric state-mission__cell--participation"
         role="cell"
-        title="Contribution to project total"
+        title={t('state.participationTitle')}
       >
         {formatPercent(participation)}%
       </span>
@@ -97,36 +99,38 @@ function StateMissionBoard({
   onHover,
   onPin,
 }) {
+  const { t } = useTranslation()
+
   return (
-    <div className="state-mission" aria-label="Mission status">
+    <div className="state-mission" aria-label={t('state.missionStatus')}>
       <div className="state-mission__table-section">
-        <p className="state-mission__section-label">Mission status</p>
+        <p className="state-mission__section-label">{t('state.missionStatus')}</p>
 
         <div className="state-mission__table" role="table">
           <div className="state-mission__head" role="row">
             <span className="state-mission__cell state-mission__cell--color" role="columnheader">
-              <span className="visually-hidden">Color</span>
+              <span className="visually-hidden">{t('common.color')}</span>
             </span>
             <span className="state-mission__cell state-mission__cell--mood" role="columnheader">
-              <span className="visually-hidden">Mood</span>
+              <span className="visually-hidden">{t('common.mood')}</span>
             </span>
             <span className="state-mission__cell state-mission__cell--name" role="columnheader">
-              Stage
+              {t('state.stage')}
             </span>
             <span className="state-mission__cell state-mission__cell--bar" role="columnheader">
-              Progress
+              {t('state.progress')}
             </span>
             <span className="state-mission__cell state-mission__cell--metric" role="columnheader">
-              Share
+              {t('state.share')}
             </span>
             <span className="state-mission__cell state-mission__cell--metric" role="columnheader">
-              Done
+              {t('state.done')}
             </span>
             <span
               className="state-mission__cell state-mission__cell--metric state-mission__cell--participation"
               role="columnheader"
             >
-              Total
+              {t('state.total')}
             </span>
           </div>
 
@@ -151,7 +155,7 @@ function StateMissionBoard({
       </div>
 
       <div className="state-mission__global">
-        <p className="state-mission__section-label">Global progress</p>
+        <p className="state-mission__section-label">{t('state.globalProgress')}</p>
         <MissionProgressBar value={overall} color="var(--color-accent-hot)" className="state-mission__bar--global" />
         <p className="state-mission__global-value">{formatPercent(overall)}%</p>
       </div>

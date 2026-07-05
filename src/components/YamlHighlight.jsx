@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function highlightValue(value) {
   const trimmed = value.trim()
@@ -65,6 +66,7 @@ function resolveDownloadName(fileName) {
 }
 
 function YamlHighlight({ code, fileName = 'project.yml' }) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const lines = code.split('\n')
 
@@ -97,14 +99,14 @@ function YamlHighlight({ code, fileName = 'project.yml' }) {
           onClick={handleCopy}
           aria-live="polite"
         >
-          {copied ? 'Copied' : 'Copy'}
+          {copied ? t('yaml.copied') : t('yaml.copy')}
         </button>
         <button type="button" className="yaml-viewer__action" onClick={handleDownload}>
-          Download
+          {t('yaml.download')}
         </button>
       </div>
 
-      <pre className="yaml-viewer" aria-label="YAML source">
+      <pre className="yaml-viewer" aria-label={t('yaml.sourceAria')}>
         <code className="yaml-viewer__code">
           {lines.map((line, index) => (
             <div className="yaml-line-row" key={index}>

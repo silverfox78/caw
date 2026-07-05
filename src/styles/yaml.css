@@ -58,8 +58,7 @@
 
 .yaml-viewer__code {
   display: block;
-  font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', Consolas,
-    'Liberation Mono', monospace;
+  font-family: var(--font-mono);
   font-size: clamp(0.76rem, 2.4vw, 0.88rem);
   line-height: 1.65;
   tab-size: 2;

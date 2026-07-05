@@ -6,6 +6,7 @@ import ProjectTabs from '../components/ProjectTabs.jsx'
 import StageStateView from '../components/StageStateView.jsx'
 import ValidationAlert from '../components/ValidationAlert.jsx'
 import YamlHighlight from '../components/YamlHighlight.jsx'
+import ProjectEditionForm from '../components/ProjectEditionForm.jsx'
 import { validateProjectDocument } from '../utils/validateProject.js'
 import { sanitizeProjectDocument } from '../utils/sanitizeProject.js'
 
@@ -91,6 +92,14 @@ function LetsSee() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('state')
   const fileInputRef = useRef(null)
+
+  const handleEditionApply = useCallback((doc) => {
+    const { doc: normalized, yaml } = sanitizeProjectDocument(doc)
+    setParsed(normalized)
+    setDisplayYaml(yaml)
+    setRaw(yaml)
+    setValidation(null)
+  }, [])
 
   const loadFromText = useCallback((text, originLabel) => {
     setRaw(text)
@@ -252,6 +261,22 @@ function LetsSee() {
               >
                 {activeTab === 'source' ? (
                   <YamlHighlight code={displayYaml} fileName={source} />
+                ) : null}
+              </div>
+
+              <div
+                role="tabpanel"
+                id="panel-edition"
+                aria-labelledby="tab-edition"
+                hidden={activeTab !== 'edition'}
+                className="project-view__panel"
+              >
+                {activeTab === 'edition' ? (
+                  <ProjectEditionForm
+                    document={parsed}
+                    resetKey={displayYaml}
+                    onApply={handleEditionApply}
+                  />
                 ) : null}
               </div>
             </section>

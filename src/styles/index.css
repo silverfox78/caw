@@ -4,6 +4,7 @@
 @import './components.css';
 @import './workspace.css';
 @import './yaml.css';
+@import './edition.css';
 @import './state.css';
 @import './validation.css';
 @import './motion.css';

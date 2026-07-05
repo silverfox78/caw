@@ -168,7 +168,7 @@
   padding: var(--space-sm);
   border-radius: var(--radius-sm);
   background: rgba(0, 0, 0, 0.35);
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1.5;
   color: var(--color-text);
@@ -188,7 +188,7 @@
 }
 
 .help-view__list code {
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.85em;
   color: var(--color-accent);
 }

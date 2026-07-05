@@ -23,6 +23,17 @@ function ProjectTabs({ activeTab, onChange }) {
       >
         Source
       </button>
+      <button
+        type="button"
+        role="tab"
+        id="tab-edition"
+        aria-selected={activeTab === 'edition'}
+        aria-controls="panel-edition"
+        className={`project-tabs__tab${activeTab === 'edition' ? ' project-tabs__tab--active' : ''}`}
+        onClick={() => onChange('edition')}
+      >
+        Edition
+      </button>
     </div>
   )
 }

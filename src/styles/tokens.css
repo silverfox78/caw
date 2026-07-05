@@ -1,8 +1,9 @@
 :root {
   /* Typography */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Literata', Georgia, 'Times New Roman', serif;
-  --font-ui: 'Syne', sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
 
   /* Patagonian dawn palette */
   --color-bg-deep: #141c18;
